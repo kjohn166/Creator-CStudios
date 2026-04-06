@@ -9,15 +9,28 @@
     renderer.setClearColor(0x000000, 0);
     container.appendChild(renderer.domElement);
 
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+    // Replace your current lights with these
+    const ambientLight = new THREE.AmbientLight(0x1a2a4a, 1.3); // dark navy ambient
     scene.add(ambientLight);
 
-    const dirLight = new THREE.DirectionalLight(0x4ade80, 1.2);
-    dirLight.position.set(5, 10, 7);
+    const dirLight = new THREE.DirectionalLight(0x4a80ff, 2); // blue-tinted key light
+    dirLight.position.set(4, 0, 4);
     scene.add(dirLight);
 
-    camera.position.z = 3;
-    camera.position.y = 0.5;
+    // Add a subtle fill light from below (like space glow)
+    const fillLight = new THREE.DirectionalLight(0x0a1628, 0.4);
+    fillLight.position.set(-5, -5, -5);
+    scene.add(fillLight);
+
+    scene.fog = new THREE.FogExp2(0x0d1b3e, 0.023); // matches your bg color
+
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.toneMappingExposure = 1.4; // slightly underexposed = more cinematic
+    renderer.outputColorSpace = THREE.SRGBColorSpace;
+
+    camera.position.z = 18;
+    camera.position.y = 14;
+    camera.position.x = 10;
 
     let model;
     let mixer; // handles the animation
@@ -26,6 +39,12 @@
     const loader = new THREE.GLTFLoader();
     loader.load('model.glb', (gltf) => {
         model = gltf.scene;
+        // After loader.load, inside the callback:
+        model.traverse((child) => {
+            if (child.isMesh) {
+                child.material.envMapIntensity = 0.3; // subtle reflection of scene
+            }
+        });
 
         // Auto-center
         const box = new THREE.Box3().setFromObject(model);
@@ -38,6 +57,21 @@
         model.rotation.y = 4;
 
         scene.add(model);
+
+        model.traverse((child) => {
+    if (child.isMesh) {
+        // Render both sides of each face
+        child.material.side = THREE.DoubleSide;
+
+        // Ensure material isn't accidentally transparent
+        child.material.transparent = false;
+        child.material.opacity = 1.0;
+
+        // Fixes depth-sorting issues with overlapping meshes
+        child.material.depthWrite = true;
+        child.material.depthTest = true;
+    }
+});
 
         // Set up the animation mixer and play all animations
         if (gltf.animations.length > 0) {

@@ -126,7 +126,7 @@ button:active {
 /* 3d model style sheet */
 #model-container {
     width: 100%;
-    height: 500px;
+    height: 750px;
     position: relative;
     z-index: 1;
 }
