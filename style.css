@@ -7,12 +7,12 @@ body {
 }
 
 nav{
-    position: sticky;
+    position: fixed;
     top: 0;
     backdrop-filter: blur(8px);
     background: rgba(0, 0, 0, 0);
     padding: 15px 0;
-    z-index: 1;
+    z-index: 2;
 }
 
 nav ul{
@@ -70,7 +70,7 @@ button:active {
         transform: translateY(0px);
     }
     50% {
-        transform: translateY(-18px);
+        transform: translateY(-5px);
     }
 }
 
@@ -87,6 +87,7 @@ button:active {
 }
 
 .studio-title {
+    margin-top: 150px;
     animation: float 4s ease-in-out infinite;
     background: linear-gradient(90deg, #ffffff, #a5f3fc, #4ade80, #ffffff);
     background-size: 300% 300%;
@@ -120,4 +121,16 @@ button:active {
 @keyframes starTwinkle {
     0%, 100% { opacity: 0.15; }
     50%       { opacity: 0.9; }
+}
+
+/* 3d model style sheet */
+#model-container {
+    width: 100%;
+    height: 500px;
+    position: relative;
+    z-index: 1;
+}
+
+#model-container canvas {
+    display: block;
 }
