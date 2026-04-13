@@ -1,6 +1,4 @@
-document.getElementById("playBtn").addEventListener("click", () => {
-    alert("Team page coming soon!");
-});
+
 
 // --- DevLog Panel Loader ---
 // Reads MarkDownDocs/indexMD/DevLogPanel.md and renders the dev log box.

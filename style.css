@@ -126,6 +126,10 @@ button:active {
     50%       { opacity: 0.9; }
 }
 
+#title-arena, #title-arena * {
+    cursor: default;
+}
+
 /* Index page overrides */
 #title-arena {
     position: relative;

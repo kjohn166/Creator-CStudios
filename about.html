@@ -2,23 +2,311 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Games - My Game Studio</title>
+  <title>About - Creator CStudios</title>
   <link rel="stylesheet" href="style.css">
+  <style>
+    #about-page {
+        padding: 120px 60px 60px 60px;
+        max-width: 960px;
+        margin: 0 auto;
+        text-align: center;
+    }
+
+    #about-page h1 {
+        font-size: 2.8rem;
+        margin-bottom: 8px;
+        background: linear-gradient(90deg, #ffffff, #a5f3fc, #4ade80, #ffffff);
+        background-size: 300% 300%;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        animation: shimmer 6s ease infinite;
+        filter: drop-shadow(0 0 12px rgba(74, 222, 128, 0.4));
+    }
+
+    #about-page .subtitle {
+        opacity: 0.55;
+        font-size: 16px;
+        margin-bottom: 48px;
+    }
+
+    /* Team section headings */
+    #team-sections {
+        display: flex;
+        flex-direction: column;
+        gap: 40px;
+    }
+
+    .team-section-label {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        margin-bottom: 20px;
+        text-align: left;
+    }
+
+    .team-section-label h2 {
+        font-size: 13px;
+        font-weight: 700;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        margin: 0;
+        white-space: nowrap;
+        opacity: 0.5;
+    }
+
+    .team-section-label.dev h2    { color: #4ade80; opacity: 1; }
+    .team-section-label.mod h2    { color: #818cf8; opacity: 1; }
+
+    .team-section-line {
+        flex: 1;
+        height: 1px;
+    }
+
+    .team-section-label.dev .team-section-line {
+        background: linear-gradient(to right, rgba(74, 222, 128, 0.4), transparent);
+    }
+
+    .team-section-label.mod .team-section-line {
+        background: linear-gradient(to right, rgba(129, 140, 248, 0.4), transparent);
+    }
+
+    /* Mod cards get a purple accent instead of green */
+    .member-card.mod-card:hover {
+        border-color: rgba(129, 140, 248, 0.4);
+        box-shadow: 0 0 24px rgba(129, 140, 248, 0.15), 0 4px 20px rgba(0, 0, 0, 0.4);
+    }
+
+    .member-card.mod-card .member-avatar {
+        border-color: rgba(129, 140, 248, 0.3);
+        box-shadow: 0 0 12px rgba(129, 140, 248, 0.2);
+    }
+
+    .member-card.mod-card .member-role {
+        color: #818cf8;
+    }
+
+    .team-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 24px;
+    }
+
+    .member-card {
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 16px;
+        padding: 28px 24px;
+        backdrop-filter: blur(8px);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        text-align: left;
+        text-decoration: none;
+        color: white;
+        transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+    }
+
+    .member-card:hover {
+        border-color: rgba(74, 222, 128, 0.4);
+        box-shadow: 0 0 24px rgba(74, 222, 128, 0.15), 0 4px 20px rgba(0, 0, 0, 0.4);
+        transform: translateY(-2px);
+    }
+
+    .member-avatar {
+        flex: 0 0 auto;
+        width: 90px;
+        height: 90px;
+        border-radius: 50%;
+        overflow: hidden;
+        border: 2px solid rgba(74, 222, 128, 0.3);
+        box-shadow: 0 0 12px rgba(74, 222, 128, 0.2);
+        background: rgba(255,255,255,0.05);
+    }
+
+    .member-avatar img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+    }
+
+    .member-info {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+    }
+
+    .member-role {
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        color: #4ade80;
+    }
+
+    .member-name {
+        font-size: 20px;
+        font-weight: 800;
+        margin: 0;
+        color: #ffffff;
+    }
+
+    .member-roblox {
+        font-size: 12px;
+        opacity: 0.5;
+        margin-top: 2px;
+    }
+
+    .member-bio {
+        font-size: 13px;
+        opacity: 0.7;
+        line-height: 1.5;
+        margin-top: 4px;
+    }
+  </style>
 </head>
 <body>
-    <div class ="stars" id="stars"></div>
+    <div class="stars" id="stars"></div>
     <nav>
         <ul>
-        <li><a href="index.html">Home</a></li>
-        <li><a href="games.html">Games</a></li>
-        <li><a href="about.html">About</a></li>
-        <li><a href="blogs.html">Blogs</a></li>
-        <li><a href="contact.html">Contact</a></li>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="games.html">Games</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="blogs.html">Blogs</a></li>
+            <li><a href="contact.html">Contact</a></li>
         </ul>
     </nav>
 
-    <h1>About Us</h1>
-    <p>Information about your studio.</p>
+    <div id="about-page">
+        <h1>Our Team</h1>
+        <p class="subtitle">The people behind Creator CStudios</p>
+
+        <div id="team-sections">
+
+            <!-- ── Development Team ── -->
+            <div class="team-section">
+                <div class="team-section-label dev">
+                    <h2>Development Team</h2>
+                    <div class="team-section-line"></div>
+                </div>
+                <div class="team-grid">
+
+                    <!-- Member card: ZBZoid -->
+                    <a class="member-card" href="https://www.roblox.com/users/4446126/profile" target="_blank" rel="noopener">
+                        <div class="member-avatar">
+                            <img data-roblox-id="4446126" alt="ZBZoid avatar" src="">
+                        </div>
+                        <div class="member-info">
+                            <span class="member-role">Owner &amp; Lead Developer</span>
+                            <h2 class="member-name">ZBZoid</h2>
+                            <p class="member-bio">Founding member of Creator CStudios, solo developer of Moon Incremental, and lead developer of Weapon X Simulator.</p>
+                        </div>
+                    </a>
+
+                    <!-- Member card: MintJumble -->
+                    <a class="member-card" href="https://www.roblox.com/users/529737562/profile" target="_blank" rel="noopener">
+                        <div class="member-avatar">
+                            <img data-roblox-id="529737562" alt="MintJumble avatar" src="">
+                        </div>
+                        <div class="member-info">
+                            <span class="member-role">Co-Owner &amp; Lead Developer</span>
+                            <h2 class="member-name">MintJumble</h2>
+                            <p class="member-bio">Co-Owner of Creator CStudios and lead developer of Weapon X Simulator.</p>
+                        </div>
+                    </a>
+
+                    <!-- Add more dev cards here -->
+
+                </div>
+            </div>
+
+            <!-- ── Discord Moderation Team ── -->
+            <div class="team-section">
+                <div class="team-section-label mod">
+                    <h2>Discord Staff</h2>
+                    <div class="team-section-line"></div>
+                </div>
+                <div class="team-grid">
+
+                    <!-- Member card: nexusmarie -->
+                    <a class="member-card mod-card" href="https://www.roblox.com/users/1804846199/profile" target="_blank" rel="noopener">
+                        <div class="member-avatar">
+                            <img data-roblox-id="1804846199" alt="nexusmarie avatar" src="">
+                        </div>
+                        <div class="member-info">
+                            <span class="member-role">Senior Moderator</span>
+                            <h2 class="member-name">nexusmarie</h2>
+                            <p class="member-bio">Senior moderator of the Creator CStudios Discord community.</p>
+                        </div>
+                    </a>
+
+                    <!-- Member card: PlaceHolder -->
+                    <a class="member-card mod-card" href="https://www.roblox.com/users/4688633630/profile" target="_blank" rel="noopener">
+                        <div class="member-avatar">
+                            <img data-roblox-id="4688633630" alt="ksy2c avatar" src="">
+                        </div>
+                        <div class="member-info">
+                            <span class="member-role">Moderator</span>
+                            <h2 class="member-name">ksy2c</h2>
+                            <p class="member-bio">Moderator of the Creator CStudios Discord community.</p>
+                        </div>
+                    </a>
+
+                    <!-- Member card: PlaceHolder -->
+                    <a class="member-card mod-card" href="" target="_blank" rel="noopener">
+                        <div class="member-avatar">
+                            <img data-roblox-id="" alt="Place Holder img" src="">
+                        </div>
+                        <div class="member-info">
+                            <span class="member-role">Place holder role</span>
+                            <h2 class="member-name">[player-name]</h2>
+                            <p class="member-bio">Place holder text entry</p>
+                        </div>
+                    </a>
+
+                    <!-- Member card: PlaceHolder -->
+                    <a class="member-card mod-card" href="" target="_blank" rel="noopener">
+                        <div class="member-avatar">
+                            <img data-roblox-id="" alt="Place Holder img" src="">
+                        </div>
+                        <div class="member-info">
+                            <span class="member-role">Place holder role</span>
+                            <h2 class="member-name">[player-name]</h2>
+                            <p class="member-bio">Place holder text entry</p>
+                        </div>
+                    </a>
+
+                    <!-- Add more mod cards here -->
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
     <script src="stars.js"></script>
+    <script>
+        // Fetch Roblox avatar headshots via roproxy (CORS-enabled mirror of the Roblox API)
+        (function () {
+            const imgs = document.querySelectorAll('img[data-roblox-id]');
+            if (!imgs.length) return;
+
+            const ids = Array.from(imgs).map(img => img.dataset.robloxId).join(',');
+
+            fetch(`https://thumbnails.roproxy.com/v1/users/avatar-headshot?userIds=${ids}&size=150x150&format=Png&isCircular=true`)
+                .then(res => res.json())
+                .then(json => {
+                    json.data.forEach(function (entry) {
+                        const img = document.querySelector(`img[data-roblox-id="${entry.targetId}"]`);
+                        if (img && entry.imageUrl) img.src = entry.imageUrl;
+                    });
+                })
+                .catch(function () {
+                    // silently fail — avatars just won't show
+                });
+        })();
+    </script>
 </body>
 </html>
