@@ -7,6 +7,16 @@
 
     renderer.setSize(container.clientWidth, container.clientHeight);
     renderer.setClearColor(0x000000, 0);
+
+    // Shift the view so the model appears in the left portion of the canvas,
+    // leaving the right side visually open for the sidebar stack boxes.
+    function applyViewOffset() {
+        const w = container.clientWidth;
+        const h = container.clientHeight;
+        // Render as if the canvas were 1.5x wider, showing the left portion.
+        // This pans the model toward the left without moving the camera.
+        camera.setViewOffset(w * 0.1, h, 0, 0, w, h);
+    }
     container.appendChild(renderer.domElement);
 
     // Replace your current lights with these
@@ -30,7 +40,9 @@
 
     camera.position.z = 18;
     camera.position.y = 14;
-    camera.position.x = 10;
+    camera.position.x = 0;
+
+    applyViewOffset();
 
     let model;
     let mixer; // handles the animation
@@ -105,5 +117,6 @@
         camera.aspect = container.clientWidth / container.clientHeight;
         camera.updateProjectionMatrix();
         renderer.setSize(container.clientWidth, container.clientHeight);
+        applyViewOffset();
     });
 })();

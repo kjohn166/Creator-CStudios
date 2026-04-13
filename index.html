@@ -7,24 +7,49 @@
     </head>
 
     <body>
-        <div class ="stars" id="stars"></div>
+        <div class="stars" id="stars"></div>
         <nav>
             <ul>
                 <li><a href="index.html">Home</a></li>
                 <li><a href="games.html">Games</a></li>
                 <li><a href="about.html">About</a></li>
+                <li><a href="blogs.html">Blogs</a></li>
                 <li><a href="contact.html">Contact</a></li>
             </ul>
         </nav>
 
-        <h1 class ="studio-title"> Creator CStudios</h1>
-        <p>A Roblox development indie team and creators of Moon Incremental and Weapon X Simulator</p>
-        <p>This website is still under construction.</p>
-        <button id="playBtn"> Check out our team!</button>
+        <!-- Physics container: title floats and bounces inside here -->
+        <div id="title-arena">
+            <h1 class="studio-title" id="index-title">
+                <span class="title-letter">C</span><span class="title-letter">r</span><span class="title-letter">e</span><span class="title-letter">a</span><span class="title-letter">t</span><span class="title-letter">o</span><span class="title-letter">r</span><span class="title-letter">&nbsp;</span><span class="title-letter">C</span><span class="title-letter">S</span><span class="title-letter">t</span><span class="title-letter">u</span><span class="title-letter">d</span><span class="title-letter">i</span><span class="title-letter">o</span><span class="title-letter">s</span>
+            </h1>
+        </div>
 
-        <div id="model-container"></div>
+        <!-- Divider -->
+        <div id="title-divider">
+            <div id="title-divider-line"></div>
+        </div>
+
+        <div id="hero-layout">
+            <div id="model-container"></div>
+
+            <div id="hero-sidebar">
+                <div class="stack-box" id="desc-box">
+                    <p>A Roblox development indie team and creators of Moon Incremental and Weapon X Simulator</p>
+                    <p>This website is still under construction.</p>
+                    <button id="playBtn"> Check out our team!</button>
+                </div>
+                <div class="stack-box" id="devlog-box">
+                    <div id="devlog-content">
+                        <!-- Populated by script.js from DevLogPanel.md -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <script src="script.js"></script>
         <script src="stars.js"></script>
+        <script src="title-physics.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
         <script src="model.js"></script>

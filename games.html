@@ -1,23 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Games - My Game Studio</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <title>Games - Creator CStudios</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class ="stars" id="stars"></div>
+    <div class="stars" id="stars"></div>
     <nav>
         <ul>
-        <li><a href="index.html">Home</a></li>
-        <li><a href="games.html">Games</a></li>
-        <li><a href="about.html">About</a></li>
-        <li><a href="contact.html">Contact</a></li>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="games.html">Games</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="blogs.html">Blogs</a></li>
+            <li><a href="contact.html">Contact</a></li>
         </ul>
     </nav>
 
-    <h1>Our Games</h1>
-    <p>Here we’ll showcase all our Roblox games.</p>
+    <div id="games-page">
+        <h1 class="studio-title">Our Games</h1>
+        <p class="games-subtitle">All games developed by Creator CStudios on Roblox.</p>
+
+        <div id="games-scroller-wrap">
+            <div id="games-scroller">
+                <!-- Cards injected by games.js -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // -------------------------------------------------------
+        // GAMES LIST — add a new object here to add a game card.
+        //   name:  display name shown on the card
+        //   image: path to thumbnail in your images/ folder
+        //   url:   full Roblox game page link
+        // -------------------------------------------------------
+        const GAMES = [
+            {
+                name:  "Moon Incremental",
+                image: "images/GamesTabImages/noFilter.webp",
+                url:   "https://www.roblox.com/games/116294134389652/Moon-Incremental"
+            },
+
+            {
+                name:  "Weapon X Simulator",
+                image: "images/thumbnails/thumbnail-test.jpg",
+                url:   "https://www.roblox.com/games/130551215074851/Weapon-X-Simulator"
+            },
+
+            {
+                name:  "More coming soon!",
+                image: "",
+                url:   ""
+            },
+        ];
+    </script>
+    <script src="games.js"></script>
     <script src="stars.js"></script>
 </body>
 </html>
