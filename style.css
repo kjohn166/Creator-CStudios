@@ -237,10 +237,36 @@ button:active {
 /* 3d model style sheet */
 #model-container {
     flex: 0 0 auto;
-    width: 30%;
+    width: clamp(200px, 30%, 480px); /* responsive: never too thin or too wide */
     height: 750px;
     position: relative;
     z-index: 1;
+    transition: width 0.1s ease;
+}
+
+/* Stack layout on small screens; hide model below 500 px */
+@media (max-width: 499px) {
+    #model-container {
+        display: none;
+    }
+}
+
+@media (max-width: 700px) {
+    #hero-layout {
+        flex-direction: column;
+        align-items: center;
+        padding: 0 16px 40px 16px;
+    }
+
+    #model-container {
+        width: 90%;
+        height: 380px;
+    }
+
+    #hero-sidebar {
+        flex-direction: column;
+        width: 100%;
+    }
 }
 
 #model-container canvas {
