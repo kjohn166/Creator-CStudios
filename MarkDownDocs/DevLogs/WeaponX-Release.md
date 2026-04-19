@@ -28,7 +28,7 @@ Picked up duplicates along the way? Don't let them go to waste, **merge** them! 
 
 ![Scarecrow enemies in a zone](images/devlogs/weaponx-release/zone-enemies.png)
 
-Fight through the current **46 stages**, face a variety of enemies as you push through each row of stages. If manage to make it to the end, don't worry we're just getting started! More zones are coming in future updates so the grind never stops.
+Fight your way through the current **46 stages**, face a variety of enemies as you push through each row of stages. If manage to make it to the end, don't worry we're just getting started! More zones are coming in future updates so the grind never stops.
 
 ---
 
