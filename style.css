@@ -11,6 +11,7 @@ body {
 nav{
     position: fixed;
     top: 0;
+    width: 100%;
     backdrop-filter: blur(8px);
     background: rgba(0, 0, 0, 0);
     padding: 15px 0;
@@ -33,6 +34,7 @@ nav a{
     color: white;
     font-size: 18px;
     font-weight: bold;
+    white-space: nowrap;
 
     transition: color 0.2s ease;
 }
