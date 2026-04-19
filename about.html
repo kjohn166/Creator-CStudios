@@ -171,13 +171,18 @@
 <body>
     <div class="stars" id="stars"></div>
     <nav>
-        <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="index.html#games-section">Games</a></li>
-            <li><a href="about.html">About</a></li>
-            <li><a href="blogs.html">Dev Logs</a></li>
-            <li><a href="contact.html">Contact</a></li>
-        </ul>
+        <button class="nav-hamburger" id="nav-hamburger" aria-label="Menu" aria-expanded="false">
+            <span></span><span></span><span></span>
+        </button>
+        <div class="nav-menu" id="nav-menu">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="index.html#games-section">Games</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="blogs.html">Dev Logs</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </div>
     </nav>
 
     <div id="about-page">
@@ -243,7 +248,7 @@
                         </div>
                     </a>
 
-                    <!-- Member card: PlaceHolder -->
+                    <!-- Member card: ksy2c -->
                     <a class="member-card mod-card" href="https://www.roblox.com/users/4688633630/profile" target="_blank" rel="noopener">
                         <div class="member-avatar">
                             <img data-roblox-id="4688633630" alt="ksy2c avatar" src="">
@@ -252,30 +257,6 @@
                             <span class="member-role">Senior Moderator</span>
                             <h2 class="member-name">ksy2c</h2>
                             <p class="member-bio">Senior Moderator of the Creator CStudios Discord community.</p>
-                        </div>
-                    </a>
-
-                    <!-- Member card: PlaceHolder -->
-                    <a class="member-card mod-card" href="" target="_blank" rel="noopener">
-                        <div class="member-avatar">
-                            <img data-roblox-id="" alt="Place Holder img" src="">
-                        </div>
-                        <div class="member-info">
-                            <span class="member-role">Place holder role</span>
-                            <h2 class="member-name">[player-name]</h2>
-                            <p class="member-bio">Place holder text entry</p>
-                        </div>
-                    </a>
-
-                    <!-- Member card: PlaceHolder -->
-                    <a class="member-card mod-card" href="" target="_blank" rel="noopener">
-                        <div class="member-avatar">
-                            <img data-roblox-id="" alt="Place Holder img" src="">
-                        </div>
-                        <div class="member-info">
-                            <span class="member-role">Place holder role</span>
-                            <h2 class="member-name">[player-name]</h2>
-                            <p class="member-bio">Place holder text entry</p>
                         </div>
                     </a>
 
@@ -288,6 +269,7 @@
     </div>
 
     <script src="stars.js"></script>
+    <script src="nav.js"></script>
     <script>
         // Fetch Roblox avatar headshots via roproxy (CORS-enabled mirror of the Roblox API)
         (function () {
@@ -314,5 +296,28 @@
                 });
         })();
     </script>
+    <footer id="site-footer">
+        <div id="footer-inner">
+            <div id="footer-brand">
+                <img src="images/CCStudios.webp" alt="Creator CStudios" id="footer-logo-img">
+                <div id="footer-copy">Copyright &copy; 2026 Creator CStudios.<br>All rights reserved.</div>
+            </div>
+            <div class="footer-col">
+                <div class="footer-col-title">Site</div>
+                <a class="footer-link" href="index.html">Home</a>
+                <a class="footer-link" href="index.html#games-section">Games</a>
+                <a class="footer-link" href="about.html">About</a>
+                <a class="footer-link" href="blogs.html">Dev Logs</a>
+                <a class="footer-link" href="contact.html">Contact</a>
+            </div>
+            <div class="footer-col">
+                <div class="footer-col-title">Connect</div>
+                <a class="footer-link" href="https://discord.gg/pfwVptewm9" target="_blank" rel="noopener">Discord</a>
+                <a class="footer-link" href="https://www.youtube.com/@CreatorCStudios" target="_blank" rel="noopener">YouTube</a>
+                <a class="footer-link" href="https://x.com/CreatorCStudio" target="_blank" rel="noopener">X (Twitter)</a>
+                <a class="footer-link" href="https://www.roblox.com/communities/3215945/Creators-CStudios#!/about" target="_blank" rel="noopener">Roblox</a>
+            </div>
+        </div>
+    </footer>
 </body>
 </html>

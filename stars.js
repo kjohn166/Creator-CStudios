@@ -14,10 +14,18 @@
     scene.appendChild(fxCanvas);
     const fxCtx = fxCanvas.getContext('2d');
 
-    let rafId      = null;
-    let twinkleT   = 0;
+    let rafId       = null;
+    let twinkleT    = 0;
     let lastTwinkle = 0;
-    const TWINKLE_MS = 50;
+    let scrollY     = 0;
+    let scrollDirty = false;
+    let lastDrawScrollY = -1;
+    const TWINKLE_MS = 80;
+
+    window.addEventListener('scroll', function () {
+        scrollY     = window.scrollY || 0;
+        scrollDirty = true;
+    }, { passive: true });
 
     // ── Constellations (normalized to viewport 0–1) ───────────────────────
     const CONSTELLATIONS = [
@@ -133,20 +141,22 @@
     function drawFx(time) {
         rafId = requestAnimationFrame(drawFx);
 
-        if (time - lastTwinkle >= TWINKLE_MS) {
-            twinkleT  = time * 0.001;
+        const ticked = time - lastTwinkle >= TWINKLE_MS;
+        if (ticked) {
+            twinkleT    = time * 0.001;
             lastTwinkle = time;
         }
 
-        const w       = fxCanvas.width;
-        const h       = fxCanvas.height;
-        const scrollY = window.scrollY || 0;
+        // skip redraw if nothing changed
+        if (!ticked && !scrollDirty) return;
+        scrollDirty = false;
+
+        const w  = fxCanvas.width;
+        const h  = fxCanvas.height;
+        const vH = window.innerHeight;
         fxCtx.clearRect(0, 0, w, h);
 
-        const vH = window.innerHeight;
-
-        fxCtx.shadowColor = 'rgba(180, 220, 255, 0.9)';
-        fxCtx.shadowBlur  = 5;
+        fxCtx.shadowBlur  = 0;
         fxCtx.strokeStyle = 'rgba(200, 225, 255, 0.22)';
         fxCtx.lineWidth   = 1.0;
         fxCtx.fillStyle   = 'white';
@@ -168,16 +178,14 @@
             if (maxY < -20 || minY > h + 20) continue;
 
             fxCtx.globalAlpha = 1;
+            fxCtx.beginPath();
             for (let e = 0; e < con.edges.length; e++) {
                 const a = con.edges[e][0], b = con.edges[e][1];
-                fxCtx.beginPath();
                 fxCtx.moveTo(sx[a], sy[a]);
                 fxCtx.lineTo(sx[b], sy[b]);
-                fxCtx.stroke();
             }
+            fxCtx.stroke();
 
-            fxCtx.shadowColor = 'rgba(200, 230, 255, 1)';
-            fxCtx.shadowBlur  = 10;
             fxCtx.strokeStyle = 'rgba(255,255,255,0.50)';
             fxCtx.lineWidth   = 0.7;
             for (let p = 0; p < n; p++) {
@@ -187,8 +195,6 @@
 
             fxCtx.strokeStyle = 'rgba(200, 225, 255, 0.22)';
             fxCtx.lineWidth   = 1.0;
-            fxCtx.shadowBlur  = 5;
-            fxCtx.shadowColor = 'rgba(180, 220, 255, 0.9)';
         }
     }
 

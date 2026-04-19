@@ -11,13 +11,18 @@
         <div class="stars" id="stars"></div>
         <div id="model-container"></div>
         <nav>
-            <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="#games-section">Games</a></li>
-                <li><a href="about.html">About</a></li>
-                <li><a href="blogs.html">Dev Logs</a></li>
-                <li><a href="contact.html">Contact</a></li>
-            </ul>
+            <button class="nav-hamburger" id="nav-hamburger" aria-label="Menu" aria-expanded="false">
+                <span></span><span></span><span></span>
+            </button>
+            <div class="nav-menu" id="nav-menu">
+                <ul>
+                    <li><a href="#" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">Home</a></li>
+                    <li><a href="#games-section">Games</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="blogs.html">Dev Logs</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
         </nav>
 
         <!-- Physics title -->
@@ -61,7 +66,7 @@
                         </div>
 
                         <div class="who-we-are-updates">
-                            <div class="who-updates-label">🔔 Join the group to stay updated</div>
+                            <div class="who-updates-label">🔔 Check out our socials to stay updated</div>
                             <div class="who-updates-tags">
                                 <span class="who-update-tag">New games</span>
                                 <span class="who-update-tag">Updates &amp; patches</span>
@@ -82,7 +87,7 @@
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
                             </div>
                             <div class="highlight-name">Roblox Game Development</div>
-                            <div class="highlight-desc">Every game we ship runs on Roblox &mdash; built with Luau, designed for replay.</div>
+                            <div class="highlight-desc">We ship out games built with Luau for the Roblox game engine, designed to maximize fun.</div>
                         </div>
                         <div class="highlight-tile">
                             <div class="highlight-icon" style="background:rgba(96,165,250,0.12);color:#60a5fa;">
@@ -122,7 +127,7 @@
         <!-- Socials Section -->
         <section id="socials-section">
             <div id="socials-inner">
-                <h2 class="socials-heading">Find Us Online</h2>
+                <h2 class="socials-heading">Where You Can Find Us</h2>
                 <div class="socials-grid">
                     <a class="social-card" href="https://discord.gg/pfwVptewm9" target="_blank" rel="noopener">
                         <div class="social-icon" style="background:rgba(88,101,242,0.15);color:#5865f2;">
@@ -136,16 +141,16 @@
                             <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
                         </div>
                         <div class="social-name">YouTube</div>
-                        <div class="social-desc">Dev vlogs &amp; game trailers</div>
+                        <div class="social-desc">Dev updates &amp; sneak peaks</div>
                     </a>
-                    <a class="social-card" href="https://x.com/CreatorCStudios" target="_blank" rel="noopener">
+                    <a class="social-card" href="https://x.com/CreatorCStudio" target="_blank" rel="noopener">
                         <div class="social-icon" style="background:rgba(255,255,255,0.08);color:#e7e9ea;">
                             <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.737-8.835L1.254 2.25H8.08l4.253 5.622 5.91-5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
                         </div>
                         <div class="social-name">X (Twitter)</div>
                         <div class="social-desc">News &amp; announcements</div>
                     </a>
-                    <a class="social-card" href="https://www.roblox.com/communities/35425534/Creator-CStudios#!/about" target="_blank" rel="noopener">
+                    <a class="social-card" href="https://www.roblox.com/communities/3215945/Creators-CStudios#!/about" target="_blank" rel="noopener">
                         <div class="social-icon" style="background:rgba(255,255,255,0.08);color:#ffffff;">
                             <svg viewBox="0 0 24 24" fill="currentColor"><path d="M5.164 0 0 18.836 18.836 24 24 5.164zm8.523 13.539-4.226-1.13 1.13-4.226 4.226 1.13z"/></svg>
                         </div>
@@ -155,6 +160,31 @@
                 </div>
             </div>
         </section>
+
+        <!-- Footer -->
+        <footer id="site-footer">
+            <div id="footer-inner">
+                <div id="footer-brand">
+                    <img src="images/CCStudios.webp" alt="Creator CStudios" id="footer-logo-img">
+                    <div id="footer-copy">Copyright &copy; 2026 Creator CStudios.<br>All rights reserved.</div>
+                </div>
+                <div class="footer-col">
+                    <div class="footer-col-title">Site</div>
+                    <a class="footer-link" href="#" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">Home</a>
+                    <a class="footer-link" href="#games-section">Games</a>
+                    <a class="footer-link" href="about.html">About</a>
+                    <a class="footer-link" href="blogs.html">Dev Logs</a>
+                    <a class="footer-link" href="contact.html">Contact</a>
+                </div>
+                <div class="footer-col">
+                    <div class="footer-col-title">Connect</div>
+                    <a class="footer-link" href="https://discord.gg/pfwVptewm9" target="_blank" rel="noopener">Discord</a>
+                    <a class="footer-link" href="https://www.youtube.com/@CreatorCStudios" target="_blank" rel="noopener">YouTube</a>
+                    <a class="footer-link" href="https://x.com/CreatorCStudio" target="_blank" rel="noopener">X (Twitter)</a>
+                    <a class="footer-link" href="https://www.roblox.com/communities/3215945/Creators-CStudios#!/about" target="_blank" rel="noopener">Roblox</a>
+                </div>
+            </div>
+        </footer>
 
         <script>
             const GAMES = [
@@ -189,6 +219,7 @@
 
         <script src="script.js"></script>
         <script src="stars.js"></script>
+        <script src="nav.js"></script>
         <script src="title-physics.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>

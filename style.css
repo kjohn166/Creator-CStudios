@@ -1,3 +1,7 @@
+html {
+    scroll-behavior: smooth;
+}
+
 body {
     font-family: Arial, sans-serif;
     background: linear-gradient(to bottom, #111, #1e3a8a);
@@ -8,40 +12,107 @@ body {
     padding: 0;
 }
 
-nav{
+nav {
     position: fixed;
     top: 0;
+    left: 0;
     width: 100%;
-    backdrop-filter: blur(8px);
-    background: rgba(0, 0, 0, 0);
-    padding: 15px 0;
-    z-index: 2;
+    z-index: 100;
 }
 
-nav ul{
+.nav-hamburger {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    width: 44px;
+    height: 44px;
+    margin: 12px 0 12px 20px;
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 10px;
+    cursor: pointer;
+    padding: 0;
+    backdrop-filter: blur(8px);
+    transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.nav-hamburger:hover {
+    background: rgba(255,255,255,0.13);
+    border-color: rgba(255,255,255,0.22);
+}
+
+.nav-hamburger span {
+    display: block;
+    width: 20px;
+    height: 2px;
+    background: white;
+    border-radius: 2px;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    transform-origin: center;
+}
+
+.nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.nav-hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+.nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+.nav-menu {
+    position: absolute;
+    top: 68px;
+    left: 16px;
+    background: rgba(8, 12, 28, 0.94);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 14px;
+    backdrop-filter: blur(16px);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+    overflow: hidden;
+    max-height: 0;
+    opacity: 0;
+    pointer-events: none;
+    transition: max-height 0.35s cubic-bezier(0.4,0,0.2,1), opacity 0.25s ease;
+    min-width: 180px;
+}
+
+.nav-menu.open {
+    max-height: 400px;
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.nav-menu ul {
     list-style: none;
     margin: 0;
-    padding: 0;
-    padding-left: 24px;
-
+    padding: 8px 0;
     display: flex;
-    justify-content: left;
-    gap: 40px;
+    flex-direction: column;
 }
 
-nav a{
+.nav-menu li {
+    opacity: 0;
+    transform: translateX(-8px);
+    transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.nav-menu.open li:nth-child(1) { opacity:1; transform:none; transition-delay:0.05s; }
+.nav-menu.open li:nth-child(2) { opacity:1; transform:none; transition-delay:0.10s; }
+.nav-menu.open li:nth-child(3) { opacity:1; transform:none; transition-delay:0.15s; }
+.nav-menu.open li:nth-child(4) { opacity:1; transform:none; transition-delay:0.20s; }
+.nav-menu.open li:nth-child(5) { opacity:1; transform:none; transition-delay:0.25s; }
+
+.nav-menu a {
+    display: block;
+    padding: 11px 22px;
     text-decoration: none;
-    color: white;
-    font-size: 18px;
-    font-weight: bold;
+    color: rgba(255,255,255,0.85);
+    font-size: 15px;
+    font-weight: 600;
+    font-family: Arial, sans-serif;
     white-space: nowrap;
-
-    transition: color 0.2s ease;
+    transition: color 0.15s ease, background 0.15s ease;
 }
 
-nav a:hover{
-    color: #4ade80
-}
+.nav-menu a:hover { color: #4ade80; background: rgba(74,222,128,0.07); }
 
 button {
     padding: 12px 28px;
@@ -339,12 +410,14 @@ button:active {
     color: rgba(255,255,255,0.50);
     margin-bottom: 10px;
     letter-spacing: 0.2px;
+    text-align: center;
 }
 
 .who-updates-tags {
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
+    justify-content: center;
 }
 
 .who-update-tag {
@@ -812,10 +885,11 @@ button:active {
 }
 
 .highlight-tile {
-    background: rgba(255,255,255,0.08);
+    background: rgba(255,255,255,0.05);
     border: 1px solid rgba(255,255,255,0.1);
     border-radius: 16px;
     padding: 24px;
+    backdrop-filter: blur(8px);
     box-shadow: 0 4px 20px rgba(0,0,0,0.3);
 }
 
@@ -878,6 +952,7 @@ button:active {
     background: rgba(255, 255, 255, 0.05);
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 16px;
+    backdrop-filter: blur(8px);
     text-decoration: none;
     color: white;
     transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
@@ -1295,6 +1370,14 @@ button:active {
     display: block;
 }
 
+.blog-inline-content img[alt*="limited"],
+.blog-inline-content img[alt*="Dragonslayer"] {
+    width: auto;
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 .blog-inline-content hr {
     border: none;
     border-top: 1px solid rgba(255,255,255,0.1);
@@ -1384,7 +1467,7 @@ button:active {
     padding: 20px 20px 16px;
     font-size: 14px;
     color: rgba(255,255,255,0.45);
-    text-align: center;
+    text-align: left;
     margin: 0;
 }
 
@@ -1580,3 +1663,68 @@ button:active {
 }
 
 .blog-post-authors strong { color: white; }
+
+/* ── Footer ─────────────────────────────────────────────── */
+#site-footer {
+    border-top: 1px solid rgba(255,255,255,0.08);
+    background: rgba(0,0,0,0.35);
+    backdrop-filter: blur(8px);
+    padding: 48px 40px 36px;
+}
+
+#footer-inner {
+    max-width: 1260px;
+    margin: 0 auto;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 80px;
+    text-align: center;
+}
+
+#footer-brand {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+}
+
+#footer-logo-img {
+    height: 48px;
+    width: auto;
+    margin-bottom: 16px;
+    display: block;
+}
+
+#footer-copy {
+    font-size: 15px;
+    color: rgba(255,255,255,0.35);
+    line-height: 1.7;
+}
+
+.footer-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    min-width: 100px;
+}
+
+.footer-col-title {
+    font-size: 15px;
+    font-weight: 800;
+    color: white;
+    letter-spacing: 0.5px;
+    margin-bottom: 4px;
+}
+
+.footer-link {
+    font-size: 15px;
+    color: rgba(255,255,255,0.45);
+    text-decoration: none;
+    transition: color 0.15s ease;
+}
+
+.footer-link:hover { color: #4ade80; }
+

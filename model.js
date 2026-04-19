@@ -155,12 +155,8 @@
     }
     syncPosition();
 
-    const hero = document.getElementById('main-hero');
     window.addEventListener('scroll', () => {
         syncPosition();
-        if (!hero) return;
-        const heroBottom = hero.getBoundingClientRect().bottom;
-        container.style.opacity = heroBottom > 0 ? '1' : '0';
     }, { passive: true });
 
     let resizeTimer;
