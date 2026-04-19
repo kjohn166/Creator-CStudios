@@ -22,6 +22,11 @@ fetch('MarkDownDocs/indexMD/DevLogPanel.md')
             else if (!line.startsWith('#'))      body  = body ? body + ' ' + line : line;
         }
 
+        // Override image with latest post thumbnail from blogs-data.js if available
+        if (typeof BLOG_POSTS !== 'undefined' && BLOG_POSTS.length && BLOG_POSTS[0].thumb) {
+            image = BLOG_POSTS[0].thumb;
+        }
+
         const container = document.getElementById('devlog-content');
         if (!container) return;
 
