@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>About - Creator CStudios</title>
   <link rel="stylesheet" href="style.css">
   <style>
@@ -172,9 +173,9 @@
     <nav>
         <ul>
             <li><a href="index.html">Home</a></li>
-            <li><a href="games.html">Games</a></li>
+            <li><a href="index.html#games-section">Games</a></li>
             <li><a href="about.html">About</a></li>
-            <li><a href="blogs.html">Blogs</a></li>
+            <li><a href="blogs.html">Dev Logs</a></li>
             <li><a href="contact.html">Contact</a></li>
         </ul>
     </nav>
@@ -293,14 +294,19 @@
             const imgs = document.querySelectorAll('img[data-roblox-id]');
             if (!imgs.length) return;
 
-            const ids = Array.from(imgs).map(img => img.dataset.robloxId).join(',');
+            const validImgs = Array.from(imgs).filter(img => img.dataset.robloxId && img.dataset.robloxId.trim());
+            if (!validImgs.length) return;
+            const ids = validImgs.map(img => img.dataset.robloxId).join(',');
 
             fetch(`https://thumbnails.roproxy.com/v1/users/avatar-headshot?userIds=${ids}&size=150x150&format=Png&isCircular=true`)
                 .then(res => res.json())
                 .then(json => {
                     json.data.forEach(function (entry) {
                         const img = document.querySelector(`img[data-roblox-id="${entry.targetId}"]`);
-                        if (img && entry.imageUrl) img.src = entry.imageUrl;
+                        if (img && entry.imageUrl) {
+                            img.src     = entry.imageUrl;
+                            img.loading = 'lazy';
+                        }
                     });
                 })
                 .catch(function () {

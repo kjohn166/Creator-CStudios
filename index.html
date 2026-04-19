@@ -2,50 +2,190 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Creator CStudios</title>
         <link rel="stylesheet" href="style.css">
     </head>
 
     <body>
         <div class="stars" id="stars"></div>
+        <div id="model-container"></div>
         <nav>
             <ul>
                 <li><a href="index.html">Home</a></li>
-                <li><a href="games.html">Games</a></li>
+                <li><a href="#games-section">Games</a></li>
                 <li><a href="about.html">About</a></li>
-                <li><a href="blogs.html">Blogs</a></li>
+                <li><a href="blogs.html">Dev Logs</a></li>
                 <li><a href="contact.html">Contact</a></li>
             </ul>
         </nav>
 
-        <!-- Physics container: title floats and bounces inside here -->
+        <!-- Physics title -->
         <div id="title-arena">
             <h1 class="studio-title" id="index-title">
                 <span class="title-letter">C</span><span class="title-letter">r</span><span class="title-letter">e</span><span class="title-letter">a</span><span class="title-letter">t</span><span class="title-letter">o</span><span class="title-letter">r</span><span class="title-letter">&nbsp;</span><span class="title-letter">C</span><span class="title-letter">S</span><span class="title-letter">t</span><span class="title-letter">u</span><span class="title-letter">d</span><span class="title-letter">i</span><span class="title-letter">o</span><span class="title-letter">s</span>
             </h1>
         </div>
 
-        <!-- Divider -->
         <div id="title-divider">
             <div id="title-divider-line"></div>
         </div>
 
-        <div id="hero-layout">
-            <div id="model-container"></div>
+        <div id="main-hero">
+            <div id="main-hero-right">
+                <div id="who-we-are">
+                    <div class="home-section-header">
+                        <h2 class="home-section-title">Who We Are</h2>
+                    </div>
+                    <div class="stack-box who-we-are-box">
+                        <p class="who-we-are-intro">A two-person indie development team building fun Roblox games for everyone to enjoy.</p>
 
-            <div id="hero-sidebar">
-                <div class="stack-box" id="desc-box">
-                    <p>A Roblox development indie team and creators of Moon Incremental and Weapon X Simulator</p>
-                    <p>This website is still under construction.</p>
-                    <button id="playBtn" onclick="window.location.href='about.html'"> Check out our team!</button>
+                        <div class="who-we-are-team">
+                            <div class="team-member">
+                                <div class="team-avatar">C</div>
+                                <div class="team-member-info">
+                                    <div class="team-member-role">Founder</div>
+                                    <div class="team-member-name">Chad</div>
+                                    <div class="team-member-username">@ ZBZoid</div>
+                                </div>
+                            </div>
+                            <div class="team-member-divider"></div>
+                            <div class="team-member">
+                                <div class="team-avatar" style="background:linear-gradient(135deg,rgba(96,165,250,0.25),rgba(96,165,250,0.08));border-color:rgba(96,165,250,0.3);color:#60a5fa;">K</div>
+                                <div class="team-member-info">
+                                    <div class="team-member-role" style="color:#60a5fa;">Co-Founder</div>
+                                    <div class="team-member-name">Kevin</div>
+                                    <div class="team-member-username">@ MintJumble</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="who-we-are-updates">
+                            <div class="who-updates-label">🔔 Join the group to stay updated</div>
+                            <div class="who-updates-tags">
+                                <span class="who-update-tag">New games</span>
+                                <span class="who-update-tag">Updates &amp; patches</span>
+                                <span class="who-update-tag">Sneak peeks &amp; leaks</span>
+                                <span class="who-update-tag">Community events</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="what-we-do">
+                    <div class="home-section-header">
+                        <h2 class="home-section-title">What We Do</h2>
+                    </div>
+                    <div class="highlights-grid">
+                        <div class="highlight-tile">
+                            <div class="highlight-icon" style="background:rgba(74,222,128,0.12);color:#4ade80;">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                            </div>
+                            <div class="highlight-name">Roblox Game Development</div>
+                            <div class="highlight-desc">Every game we ship runs on Roblox &mdash; built with Luau, designed for replay.</div>
+                        </div>
+                        <div class="highlight-tile">
+                            <div class="highlight-icon" style="background:rgba(96,165,250,0.12);color:#60a5fa;">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                            </div>
+                            <div class="highlight-name">Community Driven</div>
+                            <div class="highlight-desc">Player feedback shapes updates. Bug reports and suggestions land in Discord, not a black hole.</div>
+                        </div>
+                        <div class="highlight-tile">
+                            <div class="highlight-icon" style="background:rgba(232,121,249,0.12);color:#e879f9;">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                            </div>
+                            <div class="highlight-name">Indie at Heart</div>
+                            <div class="highlight-desc">Small team, fast iteration, no committee design. We make games we'd want to play.</div>
+                        </div>
+                    </div>
                 </div>
                 <div class="stack-box" id="devlog-box">
-                    <div id="devlog-content">
-                        <!-- Populated by script.js from DevLogPanel.md -->
-                    </div>
+                    <div id="devlog-content"></div>
+                </div>
+
+
+            </div>
+        </div>
+
+        <!-- Games Section -->
+        <div id="games-section">
+            <div id="games-page">
+                <h1 class="studio-title" style="margin-top:0;font-size:3.2rem;">Our Games</h1>
+                <p class="games-subtitle">All games developed by Creator CStudios on Roblox.</p>
+                <div id="games-scroller-wrap">
+                    <div id="games-scroller"></div>
                 </div>
             </div>
         </div>
+
+        <!-- Socials Section -->
+        <section id="socials-section">
+            <div id="socials-inner">
+                <h2 class="socials-heading">Find Us Online</h2>
+                <div class="socials-grid">
+                    <a class="social-card" href="https://discord.gg/pfwVptewm9" target="_blank" rel="noopener">
+                        <div class="social-icon" style="background:rgba(88,101,242,0.15);color:#5865f2;">
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.3698a19.7913 19.7913 0 0 0-4.8851-1.5152.0741.0741 0 0 0-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 0 0-.0785-.037 19.7363 19.7363 0 0 0-4.8852 1.515.0699.0699 0 0 0-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 0 0 .0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 0 0 .0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 0 0-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 0 1-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 0 1 .0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 0 1 .0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 0 1-.0066.1276 12.2986 12.2986 0 0 1-1.873.8914.0766.0766 0 0 0-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 0 0 .0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 0 0 .0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 0 0-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419-.0189 1.3332-.9555 2.4189-2.1568 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189Z"/></svg>
+                        </div>
+                        <div class="social-name">Discord</div>
+                        <div class="social-desc">Chat, bug reports &amp; game updates</div>
+                    </a>
+                    <a class="social-card" href="https://www.youtube.com/@CreatorCStudios" target="_blank" rel="noopener">
+                        <div class="social-icon" style="background:rgba(255,0,0,0.12);color:#ff4444;">
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                        </div>
+                        <div class="social-name">YouTube</div>
+                        <div class="social-desc">Dev vlogs &amp; game trailers</div>
+                    </a>
+                    <a class="social-card" href="https://x.com/CreatorCStudios" target="_blank" rel="noopener">
+                        <div class="social-icon" style="background:rgba(255,255,255,0.08);color:#e7e9ea;">
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.737-8.835L1.254 2.25H8.08l4.253 5.622 5.91-5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                        </div>
+                        <div class="social-name">X (Twitter)</div>
+                        <div class="social-desc">News &amp; announcements</div>
+                    </a>
+                    <a class="social-card" href="https://www.roblox.com/communities/35425534/Creator-CStudios#!/about" target="_blank" rel="noopener">
+                        <div class="social-icon" style="background:rgba(255,255,255,0.08);color:#ffffff;">
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M5.164 0 0 18.836 18.836 24 24 5.164zm8.523 13.539-4.226-1.13 1.13-4.226 4.226 1.13z"/></svg>
+                        </div>
+                        <div class="social-name">Roblox Group</div>
+                        <div class="social-desc">Join our official Roblox community</div>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <script>
+            const GAMES = [
+                {
+                    name:   "Weapon X Simulator",
+                    image:  "images/thumbnails/thumbnail-test.jpg",
+                    url:    "https://www.roblox.com/games/130551215074851/Weapon-X-Simulator",
+                    desc:   "Collect and wield a massive arsenal of powerful weapons. Grind your way to the top, unlock legendary gear, and become the ultimate warrior.",
+                    genre:  ["Simulator", "Action"],
+                    status: "active"
+                },
+                {
+                    name:   "Moon Incremental",
+                    image:  "images/GamesTabImages/noFilter.webp",
+                    url:    "https://www.roblox.com/games/116294134389652/Moon-Incremental",
+                    desc:   "An idle incremental game set on the moon. Unlock prestige layers, automate production, and watch your numbers reach astronomical heights.",
+                    genre:  ["Incremental", "Idle"],
+                    status: "active"
+                },
+                {
+                    name:   "More coming later!",
+                    image:  "",
+                    url:    "",
+                    desc:   "We're always building something new. Follow Creator CStudios and stay tuned for upcoming releases.",
+                    genre:  [],
+                    status: "coming-soon"
+                },
+            ];
+            window.GAMES_EMBED = true;
+        </script>
+        <script src="games.js"></script>
 
         <script src="script.js"></script>
         <script src="stars.js"></script>

@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Games - Creator CStudios</title>
     <link rel="stylesheet" href="style.css">
 </head>
@@ -10,9 +11,9 @@
     <nav>
         <ul>
             <li><a href="index.html">Home</a></li>
-            <li><a href="games.html">Games</a></li>
+            <li><a href="index.html#games-section">Games</a></li>
             <li><a href="about.html">About</a></li>
-            <li><a href="blogs.html">Blogs</a></li>
+            <li><a href="blogs.html">Dev Logs</a></li>
             <li><a href="contact.html">Contact</a></li>
         </ul>
     </nav>
@@ -37,21 +38,28 @@
         // -------------------------------------------------------
         const GAMES = [
             {
-                name:  "Weapon X Simulator",
-                image: "images/thumbnails/thumbnail-test.jpg",
-                url:   "https://www.roblox.com/games/130551215074851/Weapon-X-Simulator"
+                name:   "Weapon X Simulator",
+                image:  "images/thumbnails/thumbnail-test.jpg",
+                url:    "https://www.roblox.com/games/130551215074851/Weapon-X-Simulator",
+                desc:   "Collect and wield a massive arsenal of powerful weapons. Grind your way to the top, unlock legendary gear, and become the ultimate warrior.",
+                genre:  ["Simulator", "Action"],
+                status: "active"
             },
-            
             {
-                name:  "Moon Incremental",
-                image: "images/GamesTabImages/noFilter.webp",
-                url:   "https://www.roblox.com/games/116294134389652/Moon-Incremental"
+                name:   "Moon Incremental",
+                image:  "images/GamesTabImages/noFilter.webp",
+                url:    "https://www.roblox.com/games/116294134389652/Moon-Incremental",
+                desc:   "An idle incremental game set on the moon. Unlock prestige layers, automate production, and watch your numbers reach astronomical heights.",
+                genre:  ["Incremental", "Idle"],
+                status: "active"
             },
-
             {
-                name:  "More coming later!",
-                image: "",
-                url:   ""
+                name:   "More coming later!",
+                image:  "",
+                url:    "",
+                desc:   "We're always building something new. Follow Creator CStudios and stay tuned for upcoming releases.",
+                genre:  [],
+                status: "coming-soon"
             },
         ];
     </script>

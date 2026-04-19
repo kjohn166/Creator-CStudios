@@ -1,51 +1,61 @@
 (function() {
+
+    // ── Tweak these ──────────────────────────────────────────────
+    const HIDE_BREAKPOINT = 1440;   // hide model below this viewport width (px)
+
+    const CAM_X     = 8;            // camera position
+    const CAM_Y     = 14;
+    const CAM_Z     = 32;
+
+    const BASE_FOV   = 60;          // FOV at BASE_WIDTH container width
+    const BASE_WIDTH = 500;         // reference container width for FOV scaling
+
+    const MODEL_ROT_Y = 4;          // initial model Y rotation (radians)
+    const BOB_SPEED   = 0.8;        // float bob frequency
+    const BOB_AMOUNT  = 0.15;       // float bob amplitude (units)
+
+    const AMBIENT_COLOR     = 0x1a2a4a;   // ambient light colour
+    const AMBIENT_INTENSITY = 1.3;
+    const DIR_COLOR         = 0x4a80ff;   // main directional light colour
+    const DIR_INTENSITY     = 2;
+    const FILL_COLOR        = 0x0a1628;   // fill light colour
+    const FILL_INTENSITY    = 0.4;
+
+    const FOG_COLOR   = 0x0d1b3e;
+    const FOG_DENSITY = 0.02;
+
+    const TONE_EXPOSURE = 1.3;
+    // ─────────────────────────────────────────────────────────────
+
     const container = document.getElementById('model-container');
 
-    // Minimum width (px) at which the 3D model is shown.
-    // Below this the container is hidden via CSS and we skip rendering.
-    const HIDE_BREAKPOINT = 500;
-
     const scene    = new THREE.Scene();
-    const camera   = new THREE.PerspectiveCamera(50, container.clientWidth / container.clientHeight, 0.1, 1000);
+    const camera   = new THREE.PerspectiveCamera(BASE_FOV, container.clientWidth / container.clientHeight, 0.1, 1000);
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
 
     renderer.setSize(container.clientWidth, container.clientHeight);
     renderer.setClearColor(0x000000, 0);
     container.appendChild(renderer.domElement);
 
-    // --- Lights ---
-    const ambientLight = new THREE.AmbientLight(0x1a2a4a, 1.3);
+    const ambientLight = new THREE.AmbientLight(AMBIENT_COLOR, AMBIENT_INTENSITY);
     scene.add(ambientLight);
 
-    const dirLight = new THREE.DirectionalLight(0x4a80ff, 2);
+    const dirLight = new THREE.DirectionalLight(DIR_COLOR, DIR_INTENSITY);
     dirLight.position.set(4, 0, 4);
     scene.add(dirLight);
 
-    const fillLight = new THREE.DirectionalLight(0x0a1628, 0.4);
+    const fillLight = new THREE.DirectionalLight(FILL_COLOR, FILL_INTENSITY);
     fillLight.position.set(-5, -5, -5);
     scene.add(fillLight);
 
-    scene.fog = new THREE.FogExp2(0x0d1b3e, 0.023);
+    scene.fog = new THREE.FogExp2(FOG_COLOR, FOG_DENSITY);
 
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    renderer.toneMappingExposure = 1.4;
+    renderer.toneMappingExposure = TONE_EXPOSURE;
     renderer.outputColorSpace = THREE.SRGBColorSpace;
 
-    // Camera is fixed in world space — only FOV changes on resize.
-    // Y=14 / Z=18 gives the original cinematic downward angle.
-    camera.position.set(8, 14, 18);
+    camera.position.set(CAM_X, CAM_Y, CAM_Z);
 
-    // Reference container width at which FOV=50 looks correct.
-    const BASE_FOV   = 50;
-    const BASE_WIDTH = 500;
-
-    /**
-     * Called on load and every resize.
-     * - Hides the container below HIDE_BREAKPOINT px.
-     * - Widens the FOV proportionally on narrower containers so the model
-     *   always fits fully within the canvas with comfortable margins.
-     * - Never touches camera position or fog — those stay constant.
-     */
     function updateCamera() {
         const winW = window.innerWidth;
 
@@ -58,8 +68,6 @@
         const w = container.clientWidth;
         const h = container.clientHeight;
 
-        // Widen FOV as the container shrinks so the model always fits.
-        // Clamp between BASE_FOV (desktop) and 90° (very narrow).
         camera.fov    = Math.min(BASE_FOV * (BASE_WIDTH / Math.max(w, 1)), 90);
         camera.aspect = w / h;
         camera.updateProjectionMatrix();
@@ -83,15 +91,13 @@
             }
         });
 
-        // Auto-center
         const box    = new THREE.Box3().setFromObject(model);
         const center = box.getCenter(new THREE.Vector3());
         model.position.sub(center);
 
-        // Initial tilt
         model.rotation.x = 0;
         model.rotation.z = 0;
-        model.rotation.y = 4;
+        model.rotation.y = MODEL_ROT_Y;
 
         scene.add(model);
 
@@ -111,29 +117,55 @@
         }
     });
 
+    let animId = null;
+
     function animate() {
-        requestAnimationFrame(animate);
+        animId = requestAnimationFrame(animate);
 
         const delta = clock.getDelta();
 
         if (model) {
             const t = clock.elapsedTime;
-            model.position.y = Math.sin(t * 0.8) * 0.15;
+            model.position.y = Math.sin(t * BOB_SPEED) * BOB_AMOUNT;
         }
 
         if (mixer) mixer.update(delta);
 
-        // Only render when the container is visible
         if (container.style.display !== 'none') {
             renderer.render(scene, camera);
         }
     }
+
     animate();
 
-    // Debounced resize handler
+    document.addEventListener('visibilitychange', function () {
+        if (document.hidden) {
+            clock.stop();
+            cancelAnimationFrame(animId);
+            animId = null;
+        } else if (!animId) {
+            clock.start();
+            animate();
+        }
+    });
+
+    function syncPosition() {
+        container.style.top    = (window.scrollY + 60) + 'px';
+        container.style.height = (window.innerHeight - 60) + 'px';
+    }
+    syncPosition();
+
+    const hero = document.getElementById('main-hero');
+    window.addEventListener('scroll', () => {
+        syncPosition();
+        if (!hero) return;
+        const heroBottom = hero.getBoundingClientRect().bottom;
+        container.style.opacity = heroBottom > 0 ? '1' : '0';
+    }, { passive: true });
+
     let resizeTimer;
     window.addEventListener('resize', () => {
         clearTimeout(resizeTimer);
-        resizeTimer = setTimeout(updateCamera, 100);
+        resizeTimer = setTimeout(() => { syncPosition(); updateCamera(); }, 100);
     });
 })();

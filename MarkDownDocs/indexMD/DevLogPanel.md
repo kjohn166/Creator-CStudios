@@ -1,4 +1,4 @@
-# Latest Dev Blog
+# Latest Dev Log
 
 ## Weapon X Simulator - New Update!
 

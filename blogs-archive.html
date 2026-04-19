@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>All Dev Logs - Creator CStudios</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="stars" id="stars"></div>
+    <nav>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="index.html#games-section">Games</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="blogs.html">Dev Logs</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+    </nav>
+
+    <div id="blogs-page">
+        <a href="blogs.html" style="color:rgba(255,255,255,0.45);font-size:14px;text-decoration:none;display:inline-block;margin-bottom:20px;">&larr; Back to Latest</a>
+        <h1 class="studio-title">All Dev Logs</h1>
+        <p class="blogs-subtitle">Full archive — most recent first.</p>
+        <div id="archive-list"></div>
+    </div>
+
+    <script src="stars.js"></script>
+    <script src="blogs-data.js"></script>
+    <script>
+        const list = document.getElementById('archive-list');
+        if (!BLOG_POSTS.length) {
+            list.innerHTML = '<p class="blogs-empty">No posts yet.</p>';
+        } else {
+            list.innerHTML = BLOG_POSTS.map((p, i) => `
+                <a class="blog-card" href="blogs.html#${p.id}" onclick="sessionStorage.setItem('blogs_open','${p.id}')">
+                    <div class="blog-card-thumb" style="background-image:url('${p.thumb}')"></div>
+                    <div class="blog-card-body">
+                        <div class="blog-card-meta">
+                            <span class="blog-card-game">${p.game}</span>
+                            <span class="blog-card-date">${p.date}</span>
+                            ${i === 0 ? '<span class="blog-card-latest">Latest</span>' : ''}
+                        </div>
+                        <div class="blog-card-title">${p.title}</div>
+                        <div class="blog-card-excerpt">${p.excerpt}</div>
+                        <span class="blog-card-cta">Read &rarr;</span>
+                    </div>
+                </a>
+            `).join('');
+        }
+    </script>
+</body>
+</html>

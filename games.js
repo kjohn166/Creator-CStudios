@@ -1,19 +1,19 @@
-// games.js — Circular carousel with focused center card and arrow nav buttons.
+// games.js — Carousel + detail panel + games grid.
 // To add a game: add an entry to the GAMES array in games.html.
 
 (function () {
     const scroller = document.getElementById('games-scroller');
     const wrap     = document.getElementById('games-scroller-wrap');
+    const page     = document.getElementById('games-page');
 
     if (!GAMES || GAMES.length === 0) {
         scroller.innerHTML = '<p style="opacity:0.4; font-style:italic;">No games listed yet.</p>';
         return;
     }
 
-    // Current focused index
     let current = 0;
 
-    // Build cards
+    // ── Carousel ──────────────────────────────────────────────
     function buildCards() {
         scroller.innerHTML = '';
         GAMES.forEach(function (game, i) {
@@ -41,7 +41,6 @@
                 </div>
             `;
 
-            // Clicking a side card navigates to it
             card.addEventListener('click', function () {
                 const idx = parseInt(card.dataset.index);
                 if (idx !== current) {
@@ -54,26 +53,19 @@
         });
     }
 
-    // Update card positions, scales, and opacities
     function updateCarousel(animate) {
         const cards = scroller.querySelectorAll('.game-card');
         const total = cards.length;
 
         cards.forEach(function (card, i) {
-            // Circular offset from center: -floor(n/2) to +floor(n/2)
             let offset = i - current;
-            // Wrap around for circular effect
             if (offset > total / 2)  offset -= total;
             if (offset < -total / 2) offset += total;
 
             const absOffset = Math.abs(offset);
-
-            // Layout constants
             const cardWidth  = 360;
-            const gap        = 80;
+            const gap        = 20;
             const xPos       = offset * (cardWidth + gap);
-
-            // Scale and opacity drop off with distance from center
             const scale   = absOffset === 0 ? 1 : absOffset === 1 ? 0.78 : 0.6;
             const opacity = absOffset === 0 ? 1 : absOffset === 1 ? 0.55 : 0.3;
             const zIndex  = absOffset === 0 ? 10 : absOffset === 1 ? 5 : 1;
@@ -83,9 +75,11 @@
             card.style.opacity    = opacity;
             card.style.zIndex     = zIndex;
             card.style.cursor     = absOffset === 0 ? 'default' : 'pointer';
-
             card.classList.toggle('game-card-focused', absOffset === 0);
         });
+
+        refreshDots();
+        if (!window.GAMES_EMBED) updateDetailPanel();
     }
 
     function rotate(dir) {
@@ -93,7 +87,6 @@
         updateCarousel(true);
     }
 
-    // Build arrow buttons
     function buildArrows() {
         const leftBtn = document.createElement('button');
         leftBtn.className  = 'carousel-arrow carousel-arrow-left';
@@ -111,7 +104,6 @@
         wrap.appendChild(rightBtn);
     }
 
-    // Dot indicators
     function buildDots() {
         const dotsWrap = document.createElement('div');
         dotsWrap.id = 'carousel-dots';
@@ -121,7 +113,6 @@
             dot.addEventListener('click', function () {
                 current = i;
                 updateCarousel(true);
-                refreshDots();
             });
             dotsWrap.appendChild(dot);
         });
@@ -129,21 +120,123 @@
     }
 
     function refreshDots() {
-        const dots = document.querySelectorAll('.carousel-dot');
-        dots.forEach(function (d, i) {
+        document.querySelectorAll('.carousel-dot').forEach(function (d, i) {
             d.classList.toggle('active', i === current);
         });
     }
 
-    // Patch updateCarousel to also refresh dots
-    const _update = updateCarousel;
-    updateCarousel = function (animate) {
-        _update(animate);
-        refreshDots();
-    };
+    // ── Detail Panel ──────────────────────────────────────────
+    function buildDetailPanel() {
+        const panel = document.createElement('div');
+        panel.id = 'game-detail-panel';
+        panel.className = 'game-detail-panel';
+        page.appendChild(panel);
+    }
 
+    function updateDetailPanel() {
+        const panel = document.getElementById('game-detail-panel');
+        const game  = GAMES[current];
+        if (!panel || !game) return;
+
+        const hasLink = game.url && game.url.trim() !== '';
+        const isComingSoon = !hasLink || game.status === 'coming-soon';
+
+        const statusBadge = isComingSoon
+            ? '<span class="game-status-badge coming-soon">Coming Soon</span>'
+            : '<span class="game-status-badge active">● Active</span>';
+
+        const genreTags = (game.genre || [])
+            .map(function (g) { return `<span class="game-genre-tag">${g}</span>`; })
+            .join('');
+
+        const btn = hasLink
+            ? `<a class="game-detail-btn" href="${game.url}" target="_blank" rel="noopener">▶ Play on Roblox</a>`
+            : `<span class="game-detail-btn disabled">Coming Soon</span>`;
+
+        const thumbSection = game.image
+            ? `<img class="game-detail-thumb" src="${game.image}" alt="${game.name}"
+                   onerror="this.style.display='none'; this.parentElement.classList.add('no-thumb')">`
+            : '';
+
+        panel.innerHTML = `
+            <div class="game-detail-thumb-wrap${game.image ? '' : ' no-thumb'}">
+                ${thumbSection}
+            </div>
+            <div class="game-detail-info">
+                <div class="game-detail-meta">
+                    ${statusBadge}
+                    ${genreTags}
+                </div>
+                <h2 class="game-detail-name">${game.name}</h2>
+                <p class="game-detail-desc">${game.desc || ''}</p>
+                ${btn}
+            </div>
+        `;
+    }
+
+    // ── Games Grid ────────────────────────────────────────────
+    function buildGamesGrid() {
+        const section = document.createElement('div');
+        section.className = 'games-grid-section';
+
+        section.innerHTML = `
+            <div class="games-grid-header">
+                <h2 class="games-grid-title">All Games</h2>
+            </div>
+        `;
+
+        const grid = document.createElement('div');
+        grid.className = 'games-grid';
+
+        GAMES.forEach(function (game) {
+            const hasLink = game.url && game.url.trim() !== '';
+            const isComingSoon = !hasLink || game.status === 'coming-soon';
+
+            const genreTags = (game.genre || [])
+                .map(function (g) { return `<span class="game-genre-tag small">${g}</span>`; })
+                .join('');
+
+            const statusBadge = isComingSoon
+                ? '<span class="game-status-badge coming-soon" style="font-size:10px;">Coming Soon</span>'
+                : '';
+
+            const btn = hasLink
+                ? `<a class="game-btn" href="${game.url}" target="_blank" rel="noopener" style="font-size:13px;padding:9px 0;">▶ Play on Roblox</a>`
+                : `<span class="game-btn-disabled" style="font-size:13px;padding:9px 0;display:block;text-align:center;border-radius:10px;">Coming Soon</span>`;
+
+            const card = document.createElement('div');
+            card.className = 'games-grid-card' + (isComingSoon ? ' games-grid-card-disabled' : '');
+
+            card.innerHTML = `
+                <div class="games-grid-thumb-wrap${game.image ? '' : ' no-thumb'}">
+                    ${game.image ? `<img class="games-grid-thumb" src="${game.image}" alt="${game.name}"
+                        onerror="this.style.display='none'; this.parentElement.classList.add('no-thumb')">` : ''}
+                </div>
+                <div class="games-grid-body">
+                    <div class="game-detail-meta">
+                        ${statusBadge}
+                        ${genreTags}
+                    </div>
+                    <h3 class="games-grid-name">${game.name}</h3>
+                    <p class="games-grid-desc">${game.desc || ''}</p>
+                    ${btn}
+                </div>
+            `;
+
+            grid.appendChild(card);
+        });
+
+        section.appendChild(grid);
+        page.appendChild(section);
+    }
+
+    // ── Init ──────────────────────────────────────────────────
     buildCards();
     buildArrows();
     buildDots();
+    if (!window.GAMES_EMBED) {
+        buildDetailPanel();
+        buildGamesGrid();
+    }
     updateCarousel(false);
 })();

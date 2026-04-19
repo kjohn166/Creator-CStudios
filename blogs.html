@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Blogs - Creator CStudios</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Dev Logs - Creator CStudios</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -10,23 +11,96 @@
     <nav>
         <ul>
             <li><a href="index.html">Home</a></li>
-            <li><a href="games.html">Games</a></li>
+            <li><a href="index.html#games-section">Games</a></li>
             <li><a href="about.html">About</a></li>
-            <li><a href="blogs.html">Blogs</a></li>
+            <li><a href="blogs.html">Dev Logs</a></li>
             <li><a href="contact.html">Contact</a></li>
         </ul>
     </nav>
 
     <div id="blogs-page">
-        <h1 class="studio-title">Dev Blogs</h1>
+        <h1 class="studio-title">Dev Logs</h1>
         <p class="blogs-subtitle">Updates, patch notes, and behind-the-scenes from the team.</p>
 
-        <div id="blogs-container">
-            <!-- Blog posts will be loaded here -->
-            <p class="blogs-empty">No blog posts yet. Check back soon!</p>
+        <div id="blogs-layout">
+            <!-- Latest post -->
+            <div id="blogs-main">
+                <div id="blogs-empty" class="blogs-empty" style="display:none;">No blog posts yet. Check back soon!</div>
+                <div id="latest-post"></div>
+            </div>
+
+            <!-- Sidebar -->
+            <aside id="blogs-sidebar">
+                <div id="past-logs-box">
+                    <div class="past-logs-header">Past Dev Logs</div>
+                    <div id="past-logs-list"></div>
+                    <a href="blogs-archive.html" class="past-logs-see-more">See all &rarr;</a>
+                </div>
+            </aside>
         </div>
     </div>
 
     <script src="stars.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="blogs-data.js"></script>
+    <script>
+        const latest   = document.getElementById('latest-post');
+        const pastList = document.getElementById('past-logs-list');
+        const empty    = document.getElementById('blogs-empty');
+        const seeMore  = document.querySelector('.past-logs-see-more');
+
+        function stripFrontmatter(text) {
+            return text.replace(/^---[\s\S]*?---\s*/, '');
+        }
+
+        function renderPost(post, mdText) {
+            const html = marked.parse(stripFrontmatter(mdText));
+            latest.innerHTML = `
+                <div class="blog-post-meta">
+                    <span class="blog-post-game">${post.game}</span>
+                    <span class="blog-post-date">${post.date}</span>
+                </div>
+                <div class="blog-inline-content">${html}</div>
+            `;
+        }
+
+        function loadPost(post) {
+            latest.innerHTML = '<p style="opacity:0.5;padding:20px 0;">Loading…</p>';
+            fetch(post.md)
+                .then(r => r.text())
+                .then(md => renderPost(post, md))
+                .catch(() => { latest.innerHTML = '<p style="opacity:0.5;">Failed to load post.</p>'; });
+        }
+
+        if (!BLOG_POSTS.length) {
+            empty.style.display = '';
+        } else {
+            loadPost(BLOG_POSTS[0]);
+        }
+
+        const past = BLOG_POSTS.slice(1, 4);
+        if (!past.length) {
+            pastList.innerHTML = '<p class="past-logs-empty">⭐ More dev logs coming soon!</p>';
+        } else {
+            pastList.innerHTML = past.map(p => `
+                <button class="past-log-item" onclick="showPost('${p.id}')">
+                    <div class="past-log-thumb" style="background-image:url('${p.thumb}')"></div>
+                    <div class="past-log-info">
+                        <div class="past-log-title">${p.title}</div>
+                        <div class="past-log-date">${p.date}</div>
+                    </div>
+                </button>
+            `).join('');
+        }
+
+        if (BLOG_POSTS.length <= 4) seeMore.style.display = 'none';
+
+        function showPost(id) {
+            const post = BLOG_POSTS.find(p => p.id === id);
+            if (!post) return;
+            loadPost(post);
+            latest.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    </script>
 </body>
 </html>

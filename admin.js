@@ -16,7 +16,7 @@ import {
 } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-firestore.js";
 
 const firebaseConfig = {
-    apiKey:            "AIzaSyAlR8VWrJ2BtosA-EC0Ma32R9jAO5N1Ofs",
+    apiKey:            "AIzaSyAtLfoS6Sas1SrGQnI3pIXMZ8EzehQKt3A",
     authDomain:        "creator-cstudios-9b0a3.firebaseapp.com",
     projectId:         "creator-cstudios-9b0a3",
     storageBucket:     "creator-cstudios-9b0a3.firebasestorage.app",
@@ -48,12 +48,14 @@ const RARITY_COLORS = {
 };
 
 let unsubscribeLogs = null;
+let cachedLogs      = [];
+let searchQuery     = "";
 
 function showDashboard() {
     loginBox.style.display       = "none";
     dashboard.style.display      = "block";
     wrapper.style.justifyContent = "flex-start";
-    wrapper.style.alignItems     = "flex-start";
+    wrapper.style.alignItems     = "center";
     loadTradeLogs();
 }
 
@@ -72,7 +74,8 @@ function loadTradeLogs() {
         limit(200)
     );
     unsubscribeLogs = onSnapshot(q, snapshot => {
-        renderTradeLogs(snapshot.docs.map(d => d.data()));
+        cachedLogs = snapshot.docs.map(d => d.data());
+        renderTradeLogs(applySearch(cachedLogs, searchQuery));
     }, err => {
         console.error("Firestore read error:", err);
         document.getElementById("trade-log-content").innerHTML =
@@ -80,11 +83,38 @@ function loadTradeLogs() {
     });
 }
 
+function fuzzyMatch(query, target) {
+    if (!query) return true;
+    if (!target) return false;
+    const q = query.toLowerCase();
+    const t = String(target).toLowerCase();
+    if (t.includes(q)) return true;
+    let qi = 0;
+    for (let ti = 0; ti < t.length && qi < q.length; ti++) {
+        if (t[ti] === q[qi]) qi++;
+    }
+    return qi === q.length;
+}
+
+function applySearch(logs, rawQuery) {
+    const q = (rawQuery || "").trim();
+    if (!q) return logs;
+    return logs.filter(log =>
+        fuzzyMatch(q, log.playerAName) ||
+        fuzzyMatch(q, log.playerBName) ||
+        fuzzyMatch(q, log.playerAUserId) ||
+        fuzzyMatch(q, log.playerBUserId)
+    );
+}
+
 function renderTradeLogs(logs) {
     const list = document.getElementById("trade-log-list");
 
     if (logs.length === 0) {
-        list.innerHTML = '<p class="trade-log-empty">No trade logs yet.</p>';
+        const msg = searchQuery.trim()
+            ? "No matches for this search."
+            : "No trade logs yet.";
+        list.innerHTML = `<p class="trade-log-empty">${msg}</p>`;
         return;
     }
 
@@ -185,6 +215,12 @@ passInput.addEventListener("keydown", e => {
 });
 
 logoutBtn.addEventListener("click", () => signOut(auth));
+
+const searchInput = document.getElementById("trade-log-search");
+searchInput.addEventListener("input", e => {
+    searchQuery = e.target.value;
+    renderTradeLogs(applySearch(cachedLogs, searchQuery));
+});
 
 function friendlyError(code) {
     switch (code) {
