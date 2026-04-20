@@ -134,10 +134,11 @@ function applySearch(logs, rawQuery) {
         fuzzyMatch(q, log.playerBName)    ||
         fuzzyMatch(q, log.playerAUserId)  ||
         fuzzyMatch(q, log.playerBUserId)  ||
-        fuzzyMatch(q, log.senderName)     ||
-        fuzzyMatch(q, log.senderUserId)   ||
-        fuzzyMatch(q, log.recipientName)  ||
-        fuzzyMatch(q, log.recipientUserId)
+        fuzzyMatch(q, log.buyerName)      ||
+        fuzzyMatch(q, log.buyerUserId)    ||
+        fuzzyMatch(q, log.gifteeName)     ||
+        fuzzyMatch(q, log.gifteeUserId)   ||
+        fuzzyMatch(q, log.perkId)
     );
 }
 
@@ -208,33 +209,46 @@ function renderGiftLogs(logs) {
     }
 
     list.innerHTML = logs.map(log => {
-        const dateStr   = log.timestamp ? formatTimestamp(log.timestamp) : "Unknown time";
-        const sender    = esc(log.senderName    || "Unknown");
-        const recipient = esc(log.recipientName || "Unknown");
-        const senderId  = esc(log.senderUserId    || "");
-        const recipId   = esc(log.recipientUserId || "");
-        const items     = esc(log.itemsFormatted  || log.items || "Nothing");
+        const dateStr    = log.timestamp ? formatTimestamp(log.timestamp) : "Unknown time";
+        const buyer      = esc(log.buyerName    || "Unknown");
+        const giftee     = esc(log.gifteeName   || "Unknown");
+        const buyerId    = esc(log.buyerUserId  ?? "");
+        const gifteeId   = esc(log.gifteeUserId ?? "");
+        const perkId     = esc(log.perkId       || "Unknown");
+        const success    = log.success === true;
+        const failReason = esc(log.failReason   || "");
+
+        const accentColor  = success ? "#4ade80" : "#f87171";
+        const statusLabel  = success
+            ? `<span style="color:#4ade80;font-weight:700;">✓ Success</span>`
+            : `<span style="color:#f87171;font-weight:700;">✗ Failed</span>`;
+        const failRow = !success && failReason
+            ? `<div class="tl-offer-label" style="margin-top:8px;color:#f87171;">Fail Reason: <span style="font-weight:400;color:rgba(255,255,255,0.65)">${failReason}</span></div>`
+            : "";
 
         return `
         <div class="tl-card">
-            <div class="tl-card-accent" style="background:#a78bfa"></div>
+            <div class="tl-card-accent" style="background:${accentColor}"></div>
             <div class="tl-card-body">
-                <div class="tl-card-title">Gift Sent</div>
+                <div class="tl-card-title">Purchase / Gift &nbsp;${statusLabel}</div>
                 <div class="tl-players">
                     <div class="tl-player-name">
-                        <span class="tl-dot" style="background:#a78bfa"></span>${sender} (${senderId})
+                        <span class="tl-dot" style="background:#a78bfa"></span>Buyer: ${buyer}
                     </div>
-                    <div class="tl-player-name">
-                        <span class="tl-dot" style="background:#f9a8d4"></span>${recipient} (${recipId})
+                    <div class="tl-player-id">ID: ${buyerId}</div>
+                    <div class="tl-player-name" style="margin-top:6px;">
+                        <span class="tl-dot" style="background:#f9a8d4"></span>Giftee: ${giftee}
                     </div>
+                    <div class="tl-player-id">ID: ${gifteeId}</div>
                 </div>
                 <div class="tl-divider"></div>
                 <div class="tl-offers">
                     <div>
-                        <div class="tl-offer-label">Items Gifted</div>
-                        <div class="tl-offer-items">${items}</div>
+                        <div class="tl-offer-label">Perk</div>
+                        <div class="tl-offer-items">${perkId}</div>
                     </div>
                 </div>
+                ${failRow}
                 <div class="tl-footer">Weapon X Simulator — Gift Log &bull; ${dateStr}</div>
             </div>
         </div>`;
