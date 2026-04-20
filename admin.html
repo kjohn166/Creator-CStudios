@@ -218,10 +218,75 @@
                 padding: 40px 0;
             }
 
-            #trade-log-list {
+            #trade-log-list,
+            #gift-log-list {
                 display: flex;
                 flex-direction: column;
                 gap: 12px;
+            }
+
+            #gift-log-search-wrap {
+                padding: 16px 24px;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            }
+
+            #gift-log-search {
+                width: 100%;
+                padding: 10px 14px;
+                background: rgba(255, 255, 255, 0.07);
+                border: 1px solid rgba(255, 255, 255, 0.15);
+                border-radius: 8px;
+                color: white;
+                font-size: 14px;
+                outline: none;
+                box-sizing: border-box;
+                transition: border-color 0.2s ease, box-shadow 0.2s ease;
+            }
+
+            #gift-log-search::placeholder {
+                color: rgba(255, 255, 255, 0.35);
+            }
+
+            #gift-log-search:focus {
+                border-color: rgba(74, 222, 128, 0.5);
+                box-shadow: 0 0 10px rgba(74, 222, 128, 0.2);
+            }
+
+            .tl-pagination {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 16px;
+                padding: 16px 0 4px;
+            }
+
+            .tl-page-btn {
+                padding: 8px 18px;
+                background: rgba(255,255,255,0.07);
+                border: 1px solid rgba(255,255,255,0.15);
+                border-radius: 8px;
+                color: white;
+                font-size: 13px;
+                font-family: Arial, sans-serif;
+                cursor: pointer;
+                transition: background 0.2s ease, border-color 0.2s ease;
+            }
+
+            .tl-page-btn:hover:not([disabled]) {
+                background: rgba(74,222,128,0.15);
+                border-color: rgba(74,222,128,0.4);
+            }
+
+            .tl-page-btn[disabled] {
+                opacity: 0.3;
+                cursor: default;
+            }
+
+            .tl-page-info {
+                font-size: 13px;
+                color: rgba(255,255,255,0.45);
+                min-width: 90px;
+                text-align: center;
             }
 
             .tl-card {
@@ -365,6 +430,7 @@
                         </div>
                         <div id="trade-log-content">
                             <div id="trade-log-list"></div>
+                            <div id="trade-log-pagination"></div>
                         </div>
                     </div>
                 </div>
@@ -373,11 +439,12 @@
                 <div class="tab-panel" id="panel-gift">
                     <div class="trade-log-table-wrap">
                         <h2>Gift Log Entries</h2>
-                        <div id="trade-log-search-wrap">
+                        <div id="gift-log-search-wrap">
                             <input type="text" id="gift-log-search" placeholder="Search by player name or user ID..." autocomplete="off" />
                         </div>
                         <div id="trade-log-content">
                             <div id="gift-log-list"></div>
+                            <div id="gift-log-pagination"></div>
                         </div>
                     </div>
                 </div>

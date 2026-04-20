@@ -47,13 +47,17 @@ const RARITY_COLORS = {
     Mythic:    "#e879f9"
 };
 
-let unsubscribeTrade = null;
-let unsubscribeGift  = null;
-let cachedTradeLogs  = [];
-let cachedGiftLogs   = [];
-let tradeSearch      = "";
-let giftSearch       = "";
-let activeTab        = "trade";
+const PAGE_SIZE = 10;
+
+let unsubscribeTrade  = null;
+let unsubscribeGift   = null;
+let cachedTradeLogs   = [];
+let cachedGiftLogs    = [];
+let tradeSearch       = "";
+let giftSearch        = "";
+let activeTab         = "trade";
+let tradeCurrentPage  = 1;
+let giftCurrentPage   = 1;
 
 window.switchTab = function(tab) {
     activeTab = tab;
@@ -142,18 +146,46 @@ function applySearch(logs, rawQuery) {
     );
 }
 
+function renderPaginationHTML(current, total, tab) {
+    if (total <= 1) return "";
+    return `
+    <div class="tl-pagination">
+        <button class="tl-page-btn" onclick="changePage('${tab}',-1)" ${current <= 1 ? "disabled" : ""}>← Prev</button>
+        <span class="tl-page-info">Page ${current} of ${total}</span>
+        <button class="tl-page-btn" onclick="changePage('${tab}',1)" ${current >= total ? "disabled" : ""}>Next →</button>
+    </div>`;
+}
+
+window.changePage = function(tab, dir) {
+    if (tab === "trade") {
+        tradeCurrentPage += dir;
+        renderTradeLogs(applySearch(cachedTradeLogs, tradeSearch));
+    } else {
+        giftCurrentPage += dir;
+        renderGiftLogs(applySearch(cachedGiftLogs, giftSearch));
+    }
+};
+
 function renderTradeLogs(logs) {
-    const list = document.getElementById("trade-log-list");
+    const list       = document.getElementById("trade-log-list");
+    const pagination = document.getElementById("trade-log-pagination");
+    const totalPages = Math.max(1, Math.ceil(logs.length / PAGE_SIZE));
+    tradeCurrentPage = Math.min(tradeCurrentPage, totalPages);
 
     if (logs.length === 0) {
         const msg = tradeSearch.trim()
             ? "No matches for this search."
             : "No trade logs yet.";
         list.innerHTML = `<p class="trade-log-empty">${msg}</p>`;
+        pagination.innerHTML = "";
         return;
     }
 
-    list.innerHTML = logs.map(log => {
+    const start    = (tradeCurrentPage - 1) * PAGE_SIZE;
+    const pageItems = logs.slice(start, start + PAGE_SIZE);
+    pagination.innerHTML = renderPaginationHTML(tradeCurrentPage, totalPages, "trade");
+
+    list.innerHTML = pageItems.map(log => {
         const accentColor = RARITY_COLORS[log.topRarity] || RARITY_COLORS.Common;
         const dateStr     = log.timestamp
             ? formatTimestamp(log.timestamp)
@@ -198,17 +230,25 @@ function renderTradeLogs(logs) {
 }
 
 function renderGiftLogs(logs) {
-    const list = document.getElementById("gift-log-list");
+    const list       = document.getElementById("gift-log-list");
+    const pagination = document.getElementById("gift-log-pagination");
+    const totalPages = Math.max(1, Math.ceil(logs.length / PAGE_SIZE));
+    giftCurrentPage  = Math.min(giftCurrentPage, totalPages);
 
     if (logs.length === 0) {
         const msg = giftSearch.trim()
             ? "No matches for this search."
             : "No gift logs yet.";
         list.innerHTML = `<p class="trade-log-empty">${msg}</p>`;
+        pagination.innerHTML = "";
         return;
     }
 
-    list.innerHTML = logs.map(log => {
+    const start    = (giftCurrentPage - 1) * PAGE_SIZE;
+    const pageItems = logs.slice(start, start + PAGE_SIZE);
+    pagination.innerHTML = renderPaginationHTML(giftCurrentPage, totalPages, "gift");
+
+    list.innerHTML = pageItems.map(log => {
         const dateStr    = log.timestamp ? formatTimestamp(log.timestamp) : "Unknown time";
         const buyer      = esc(log.buyerName    || "Unknown");
         const giftee     = esc(log.gifteeName   || "Unknown");
@@ -314,12 +354,14 @@ logoutBtn.addEventListener("click", () => signOut(auth));
 const tradeSearchInput = document.getElementById("trade-log-search");
 tradeSearchInput.addEventListener("input", e => {
     tradeSearch = e.target.value;
+    tradeCurrentPage = 1;
     renderTradeLogs(applySearch(cachedTradeLogs, tradeSearch));
 });
 
 const giftSearchInput = document.getElementById("gift-log-search");
 giftSearchInput.addEventListener("input", e => {
     giftSearch = e.target.value;
+    giftCurrentPage = 1;
     renderGiftLogs(applySearch(cachedGiftLogs, giftSearch));
 });
 
