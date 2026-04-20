@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/webp" href="images/CCStudios.webp">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Moon Inc. Info - Creator CStudios</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        #game-info-page {
+            padding: 120px 60px 60px 60px;
+            max-width: 980px;
+            margin: 0 auto;
+        }
+
+        .game-info-header {
+            text-align: center;
+            margin-bottom: 56px;
+        }
+
+        .game-info-header h1 {
+            font-size: 2.8rem;
+            margin-bottom: 8px;
+            background: linear-gradient(90deg, #ffffff, #a5f3fc, #4ade80, #ffffff);
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: shimmer 6s ease infinite;
+            filter: drop-shadow(0 0 12px rgba(74, 222, 128, 0.4));
+        }
+
+        .game-info-header .subtitle {
+            opacity: 0.55;
+            font-size: 16px;
+            margin-bottom: 32px;
+        }
+
+        .play-btn {
+            display: inline-block;
+            padding: 14px 36px;
+            background: linear-gradient(135deg, rgba(74, 222, 128, 0.2), rgba(74, 222, 128, 0.08));
+            border: 1px solid rgba(74, 222, 128, 0.4);
+            border-radius: 50px;
+            color: #4ade80;
+            font-size: 15px;
+            font-weight: 700;
+            text-decoration: none;
+            letter-spacing: 0.5px;
+            transition: background 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+        }
+
+        .play-btn:hover {
+            background: linear-gradient(135deg, rgba(74, 222, 128, 0.3), rgba(74, 222, 128, 0.12));
+            box-shadow: 0 0 24px rgba(74, 222, 128, 0.25);
+            transform: translateY(-2px);
+        }
+
+        .game-thumbnail {
+            width: 100%;
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.5);
+            margin-bottom: 48px;
+        }
+
+        .game-thumbnail img {
+            width: 100%;
+            display: block;
+            object-fit: cover;
+            max-height: 420px;
+        }
+
+        /* ── Section card ── */
+        .info-section {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 36px;
+            backdrop-filter: blur(8px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            margin-bottom: 24px;
+        }
+
+        .info-section-label {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 20px;
+        }
+
+        .info-section-label h2 {
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #4ade80;
+            margin: 0;
+            white-space: nowrap;
+        }
+
+        .info-section-line {
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(to right, rgba(74, 222, 128, 0.35), transparent);
+        }
+
+        .info-section p {
+            opacity: 0.75;
+            line-height: 1.75;
+            font-size: 15px;
+            margin: 0;
+        }
+
+        /* ── Tags ── */
+        .info-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 4px;
+        }
+
+        .info-tag {
+            background: rgba(74, 222, 128, 0.1);
+            border: 1px solid rgba(74, 222, 128, 0.25);
+            border-radius: 50px;
+            padding: 6px 16px;
+            font-size: 13px;
+            color: #4ade80;
+            font-weight: 600;
+        }
+
+        /* ── Stat grid ── */
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+        }
+
+        .info-stat {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 14px;
+            padding: 20px 24px;
+        }
+
+        .info-stat-label {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            opacity: 0.4;
+            margin-bottom: 6px;
+        }
+
+        .info-stat-value {
+            font-size: 16px;
+            font-weight: 700;
+            color: #ffffff;
+        }
+
+        /* ── Timestamp ── */
+        .info-timestamp {
+            text-align: center;
+            font-size: 12px;
+            color: rgba(255,255,255,0.28);
+            margin-bottom: 32px;
+            margin-top: -8px;
+            letter-spacing: 0.5px;
+        }
+
+        /* ── Boss drop rate table ── */
+        .drop-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 16px;
+        }
+
+        .drop-table tr {
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+
+        .drop-table tr:last-child { border-bottom: none; }
+
+        .drop-table td {
+            padding: 11px 4px;
+            font-size: 14px;
+        }
+
+        .drop-table td:first-child {
+            width: 42%;
+            color: rgba(255,255,255,0.5);
+        }
+
+        .drop-table td:last-child {
+            font-weight: 700;
+            color: #ffffff;
+        }
+
+        .rarity-uncommon { color: #a3e635; }
+        .rarity-rare     { color: #60a5fa; }
+        .rarity-epic     { color: #c084fc; }
+        .rarity-legendary{ color: #fb923c; }
+        .rarity-mythic   { color: #f43f5e; }
+
+        .drop-note {
+            font-size: 13px;
+            color: rgba(255,255,255,0.45);
+            font-style: italic;
+            margin-top: 4px;
+        }
+
+        /* ── Prerequisites ── */
+        .prereq-note {
+            background: rgba(165, 243, 252, 0.07);
+            border: 1px solid rgba(165, 243, 252, 0.2);
+            border-radius: 10px;
+            padding: 12px 18px;
+            font-size: 13px;
+            color: rgba(165, 243, 252, 0.85);
+            margin-bottom: 10px;
+            line-height: 1.6;
+        }
+
+        .prereq-note strong {
+            color: #a5f3fc;
+        }
+
+        /* ── Aura cards ── */
+        .aura-card {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 14px;
+            padding: 20px 24px;
+            margin-bottom: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .aura-card:last-child { margin-bottom: 0; }
+
+        .aura-imgs {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            gap: 8px;
+            justify-content: center;
+        }
+
+        .aura-img {
+            width: 90px;
+            height: 90px;
+            object-fit: cover;
+            border-radius: 10px;
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            cursor: zoom-in;
+        }
+
+        .aura-img:hover {
+            transform: scale(2.5);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.6);
+            z-index: 10;
+            position: relative;
+        }
+
+        .aura-img-wrap {
+            position: relative;
+            display: inline-block;
+        }
+
+        .aura-img-label {
+            position: absolute;
+            bottom: calc(100% + 76px);
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.85);
+            color: #ffffff;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 6px;
+            white-space: nowrap;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.15s ease;
+            z-index: 20;
+            letter-spacing: 0.4px;
+        }
+
+        .aura-img-wrap:hover .aura-img-label {
+            opacity: 1;
+        }
+
+        .aura-content {
+            flex: 1;
+            min-width: 0;
+            text-align: center;
+        }
+
+        .aura-name {
+            font-size: 16px;
+            font-weight: 800;
+            color: #ffffff;
+            margin-bottom: 10px;
+        }
+
+        .aura-materials {
+            font-size: 13px;
+            color: rgba(255,255,255,0.6);
+            line-height: 1.75;
+            margin-bottom: 6px;
+        }
+
+        .aura-materials span {
+            color: rgba(255,255,255,0.85);
+            font-weight: 600;
+        }
+
+        .aura-source {
+            font-size: 13px;
+            color: #a5f3fc;
+            line-height: 1.6;
+        }
+
+        .aura-source em {
+            color: #fbbf24;
+        }
+
+        .aura-divider {
+            text-align: center;
+            color: rgba(255,255,255,0.18);
+            font-size: 12px;
+            letter-spacing: 3px;
+            margin: 14px 0;
+            user-select: none;
+        }
+
+        .aura-subsection-label {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #4ade80;
+            margin-bottom: 14px;
+            margin-top: 24px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid rgba(74,222,128,0.2);
+        }
+
+        /* ── Tabs ── */
+        .aura-tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 24px;
+        }
+
+        .aura-tab-btn {
+            flex: 1;
+            padding: 10px 0;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 10px;
+            color: rgba(255,255,255,0.5);
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+            font-family: Arial, sans-serif;
+            box-shadow: none;
+            transform: none;
+        }
+
+        .aura-tab-btn:hover {
+            background: rgba(74,222,128,0.08);
+            color: rgba(255,255,255,0.8);
+            border-color: rgba(74,222,128,0.25);
+            transform: none;
+            box-shadow: none;
+        }
+
+        .aura-tab-btn.active {
+            background: rgba(74,222,128,0.15);
+            border-color: rgba(74,222,128,0.5);
+            color: #4ade80;
+            box-shadow: none;
+            transform: none;
+        }
+
+        .aura-tab-panel { display: none; }
+        .aura-tab-panel.active { display: block; }
+
+        /* ── Farming tiers ── */
+        .farm-row {
+            display: flex;
+            align-items: baseline;
+            gap: 14px;
+            padding: 11px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            flex-wrap: wrap;
+        }
+
+        .farm-row:last-child { border-bottom: none; }
+
+        .farm-resource {
+            font-size: 13px;
+            font-weight: 700;
+            color: #4ade80;
+            min-width: 180px;
+            flex-shrink: 0;
+        }
+
+        .farm-mult {
+            color: #a5f3fc;
+            font-weight: 700;
+            font-size: 13px;
+            flex-shrink: 0;
+        }
+
+        .farm-auras {
+            font-size: 13px;
+            color: rgba(255,255,255,0.65);
+            line-height: 1.6;
+        }
+
+        .farm-note {
+            font-size: 12px;
+            color: rgba(255,255,255,0.35);
+            font-style: italic;
+        }
+
+        .aura-cost {
+            display: inline-block;
+            background: rgba(251, 191, 36, 0.1);
+            border: 1px solid rgba(251, 191, 36, 0.3);
+            color: #fbbf24;
+            font-size: 12px;
+            font-weight: 700;
+            padding: 3px 12px;
+            border-radius: 50px;
+            margin-bottom: 10px;
+        }
+
+        .aura-card-noimg {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 14px;
+            padding: 20px 24px;
+            margin-bottom: 12px;
+        }
+
+        /* Top suggested auras */
+        .suggested-card {
+            background: rgba(74, 222, 128, 0.06);
+            border: 1px solid rgba(74, 222, 128, 0.2);
+            border-radius: 14px;
+            padding: 20px 24px;
+            margin-bottom: 12px;
+        }
+
+        .suggested-name {
+            font-size: 16px;
+            font-weight: 800;
+            color: #4ade80;
+            margin-bottom: 10px;
+        }
+
+        .suggested-stats {
+            font-size: 13px;
+            color: rgba(255,255,255,0.65);
+            line-height: 1.75;
+        }
+
+        .suggested-stats span {
+            color: #a5f3fc;
+            font-weight: 700;
+        }
+
+        @media (max-width: 640px) {
+            #game-info-page { padding: 100px 20px 40px; }
+            .info-grid { grid-template-columns: 1fr; }
+            .farm-resource { min-width: 120px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="stars" id="stars"></div>
+    <nav>
+        <button class="nav-hamburger" id="nav-hamburger" aria-label="Menu" aria-expanded="false">
+            <span></span><span></span><span></span>
+        </button>
+        <div class="nav-menu" id="nav-menu">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="index.html#games-section">Games</a></li>
+                <li><a href="about.html">Our Team</a></li>
+                <li><a href="blogs.html">Dev Logs</a></li>
+                <li><a href="moon-inc.html">Moon Inc. Info</a></li>
+                <li><a href="weapon-x.html">Weapon X Info</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div id="game-info-page">
+
+        <h1 class="game-info-header" style="font-size:2.8rem;margin-bottom:8px;background:linear-gradient(90deg,#ffffff,#a5f3fc,#4ade80,#ffffff);background-size:300% 300%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:shimmer 6s ease infinite;filter:drop-shadow(0 0 12px rgba(74,222,128,0.4));">Moon Incremental Game Information</h1>
+        <p class="info-timestamp">Game info last updated: April 19, 2026</p>
+
+        <!-- Boss Aura Drop Rates -->
+        <div class="info-section">
+            <div class="info-section-label">
+                <h2>Boss Aura Drop Rates</h2>
+                <div class="info-section-line"></div>
+            </div>
+            <table class="drop-table">
+                <tr>
+                    <td><span class="rarity-uncommon">Uncommon Boss</span></td>
+                    <td>1 / 1,000,000</td>
+                </tr>
+                <tr>
+                    <td><span class="rarity-rare">Rare Boss</span></td>
+                    <td>1 / 800,000</td>
+                </tr>
+                <tr>
+                    <td><span class="rarity-epic">Epic Boss</span></td>
+                    <td>1 / 600,000</td>
+                </tr>
+                <tr>
+                    <td><span class="rarity-legendary">Legendary Boss</span></td>
+                    <td>1 / 400,000</td>
+                </tr>
+                <tr>
+                    <td><span class="rarity-mythic">Mythic Boss</span></td>
+                    <td>1 / 200,000</td>
+                </tr>
+            </table>
+            <p class="drop-note">Drop chance can be boosted via auras, artifacts, and upgrades.</p>
+        </div>
+
+        <!-- How to Get the Best Auras -->
+        <div class="info-section">
+            <div class="info-section-label">
+                <h2>How to Get the Top Auras</h2>
+                <div class="info-section-line"></div>
+            </div>
+
+            <div class="prereq-note">
+                <strong>Earth Item Prerequisites:</strong> Ascension 5+ &amp; Rebirth 50+
+            </div>
+            <div class="prereq-note">
+                <strong>Mercury Item Prerequisites:</strong> Ascension 10+ &amp; Rebirth 65+
+            </div>
+            <div class="prereq-note" style="margin-bottom:24px;">
+                <strong>note:</strong> Tickets are acquired once per Ascension (Ascensions 1-5 are gained at Rebirth 50 on Pluto, 6-10 are on Earth at Rebirth 65, and 11-15 are on Mercury at Rebirth 80)
+            </div>
+
+            <!-- Tab buttons -->
+            <div class="aura-tabs">
+                <button class="aura-tab-btn active" onclick="switchAuraTab(this,'crafted')">Crafted Auras</button>
+                <button class="aura-tab-btn" onclick="switchAuraTab(this,'noncrafted')">Non-Crafted Auras</button>
+            </div>
+
+            <!-- Crafted panel -->
+            <div class="aura-tab-panel active" id="aura-panel-crafted">
+
+                <div class="aura-card">
+                    <div class="aura-imgs">
+                        <img class="aura-img" src="images/moon-inc-info/auraImgs/FrozenEclipse.png" alt="FrozenEclipse">
+                    </div>
+                    <div class="aura-content">
+                        <div class="aura-name">FrozenEclipse</div>
+                        <div class="aura-cost">Costs 100B Boss Tokens</div>
+                        <div class="aura-materials">
+                            <span>Materials:</span> Aura Stabilizer ×2, Fragment Core ×2, Cursed Essence ×5, Cursed Fragment ×5, Cosmic Heart ×1, Glacial Heart ×1, Frozen Shard ×5
+                        </div>
+                        <div class="aura-source">
+                            + <em>ShadowEclipse</em> - Very Rare Ghoul Boss Drop<br>
+                            + <em>FrostBite</em> - Very Rare Yeti Boss Drop
+                        </div>
+                    </div>
+                </div>
+
+                <div class="aura-divider">─────༺☆༻༺✧༻༺☆༻─────</div>
+
+                <div class="aura-card">
+                    <div class="aura-imgs">
+                        <img class="aura-img" src="images/moon-inc-info/auraImgs/DivinePetal.png" alt="DivinePetal">
+                    </div>
+                    <div class="aura-content">
+                        <div class="aura-name">DivinePetal</div>
+                        <div class="aura-cost">Costs 10B Cash</div>
+                        <div class="aura-materials">
+                            <span>Materials:</span> Fragment Core ×1, Aura Stabilizer ×1, Divine Thread ×1, Astral Chunk ×100
+                        </div>
+                        <div class="aura-source">
+                            + <em>World Serpent</em> - Earth Fishing<br>
+                            + <em>Ancient Wyrm</em> - Earth Fishing
+                        </div>
+                    </div>
+                </div>
+
+                <div class="aura-divider">─────༺☆༻༺✧༻༺☆༻─────</div>
+
+                <div class="aura-card">
+                    <div class="aura-imgs">
+                        <img class="aura-img" src="images/moon-inc-info/auraImgs/Vortex.png" alt="Vortex">
+                    </div>
+                    <div class="aura-content">
+                        <div class="aura-name">Vortex</div>
+                        <div class="aura-cost">Costs 5B Cash</div>
+                        <div class="aura-materials">
+                            <span>Materials:</span> Fragment Core ×1, Aura Stabilizer ×1
+                        </div>
+                        <div class="aura-source">
+                            + <em>Gaia Leviathan</em> - Earth Fishing
+                        </div>
+                    </div>
+                </div>
+
+                <div class="aura-divider">─────༺☆༻༺✧༻༺☆༻─────</div>
+
+                <div class="aura-card">
+                    <div class="aura-imgs">
+                        <img class="aura-img" src="images/moon-inc-info/auraImgs/LifeLeach.png" alt="LifeLeach">
+                    </div>
+                    <div class="aura-content">
+                        <div class="aura-name">LifeLeach</div>
+                        <div class="aura-cost">Costs 500M Ingots</div>
+                        <div class="aura-materials">
+                            <span>Materials:</span> Fragment Core ×1, Aura Stabilizer ×1, Cursed Essence ×3, Divine Thread ×3
+                        </div>
+                    </div>
+                </div>
+
+                <div class="aura-divider">─────༺☆༻༺✧༻༺☆༻─────</div>
+
+                <div class="aura-card">
+                    <div class="aura-imgs">
+                        <img class="aura-img" src="images/moon-inc-info/auraImgs/IceStorm.png" alt="IceStorm">
+                    </div>
+                    <div class="aura-content">
+                        <div class="aura-name">IceStorm</div>
+                        <div class="aura-cost">Costs 10B Diamonds</div>
+                        <div class="aura-materials">
+                            <span>Materials:</span> Fragment Core ×1, Aura Stabilizer ×1, Frozen Shard ×10, Ice Essence ×20, Glacial Heart ×1
+                        </div>
+                    </div>
+                </div>
+
+                <div class="aura-divider">─────༺☆༻༺✧༻༺☆༻─────</div>
+
+                <div class="aura-card">
+                    <div class="aura-imgs">
+                        <img class="aura-img" src="images/moon-inc-info/auraImgs/RippleSoul.png" alt="RippleSoul">
+                    </div>
+                    <div class="aura-content">
+                        <div class="aura-name">RippleSoul</div>
+                        <div class="aura-cost">Costs 100B Cash</div>
+                        <div class="aura-materials">
+                            <span>Materials:</span> Fragment Core ×1, Aura Stabilizer ×1, Divine Thread ×1, Astral Chunk ×100
+                        </div>
+                        <div class="aura-source">
+                            + <em>Chromatic Ore ×2, Mercury Scales ×2</em> - Mercury Fishing
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Non-Crafted panel -->
+            <div class="aura-tab-panel" id="aura-panel-noncrafted">
+
+                <div class="aura-card">
+                    <div class="aura-imgs">
+                        <img class="aura-img" src="images/moon-inc-info/auraImgs/MelodicPrism.png" alt="MelodicPrism">
+                        <img class="aura-img" src="images/moon-inc-info/auraImgs/DeepSea.png" alt="DeepSea">
+                    </div>
+                    <div class="aura-content">
+                        <div class="aura-name">MelodicPrism &amp; DeepSea</div>
+                        <div class="aura-source">
+                            Very Rare Fishing Drop on Earth<br>
+                            <span style="color:rgba(255,255,255,0.35);font-size:12px;font-style:italic;">Note: Melodic is currently out of rotation (OOR)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="aura-divider">─────༺☆༻༺✧༻༺☆༻─────</div>
+
+                <div class="aura-card">
+                    <div class="aura-imgs">
+                        <img class="aura-img" src="images/moon-inc-info/auraImgs/ChainedSorrow.png" alt="ChainedSorrow">
+                        <img class="aura-img" src="images/moon-inc-info/auraImgs/LuminaSigil.png" alt="LuminaSigil">
+                        <img class="aura-img" src="images/moon-inc-info/auraImgs/GalaxyX.png" alt="GalaxyX">
+                        <img class="aura-img" src="images/moon-inc-info/auraImgs/Watcher.png" alt="Watcher">
+                    </div>
+                    <div class="aura-content">
+                        <div class="aura-name">ChainedSorrow, LuminaSigil, GalaxyX, Watcher <span style="font-size:13px;font-weight:400;color:rgba(255,255,255,0.45)">(current limited)</span></div>
+                        <div class="aura-source">
+                            Limited Auras — most likely obtained through trading now.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="aura-divider">─────༺☆༻༺✧༻༺☆༻─────</div>
+
+                <div class="aura-card">
+                    <div class="aura-imgs">
+                        <img class="aura-img" src="images/moon-inc-info/auraImgs/MercuryVortex.png" alt="MercuryVortex">
+                        <img class="aura-img" src="images/moon-inc-info/auraImgs/ArcaneConstellation.png" alt="ArcaneConstellation">
+                    </div>
+                    <div class="aura-content">
+                        <div class="aura-name">MercuryVortex &amp; ArcaneConstellation</div>
+                        <div class="aura-source">
+                            Exotic Vending Drop on Mercury
+                        </div>
+                    </div>
+                </div>
+
+                <div class="aura-divider">─────༺☆༻༺✧༻༺☆༻─────</div>
+
+                <div class="aura-card">
+                    <div class="aura-imgs">
+                        <img class="aura-img" src="images/moon-inc-info/auraImgs/PrismShard.png" alt="PrismShard">
+                    </div>
+                    <div class="aura-content">
+                        <div class="aura-name">PrismShard</div>
+                        <div class="aura-source">
+                            Mercury Boss Tower — <em>Very Rare Drop</em>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="aura-divider">─────༺☆༻༺✧༻༺☆༻─────</div>
+
+                <div class="aura-card">
+                    <div class="aura-imgs">
+                        <img class="aura-img" src="images/moon-inc-info/auraImgs/EchoError.png" alt="EchoError">
+                    </div>
+                    <div class="aura-content">
+                        <div class="aura-name">EchoError</div>
+                        <div class="aura-source">
+                            Mercury Boss Tower — <em>Guaranteed at Stage 25</em>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Best Auras for Farming -->
+        <div class="info-section">
+            <div class="info-section-label">
+                <h2>Best Auras for Farming</h2>
+                <div class="info-section-line"></div>
+            </div>
+
+            <div class="farm-row">
+                <div class="farm-resource">Essence</div>
+                <div class="farm-auras">
+                    PrismShard <span class="farm-mult">(85×)</span>, FrozenEclipse <span class="farm-mult">(65×)</span>, EchoError <span class="farm-mult">(60×)</span>
+                </div>
+            </div>
+            <div class="farm-row">
+                <div class="farm-resource">XP</div>
+                <div class="farm-auras">
+                    PrismShard <span class="farm-mult">(60×)</span><br>
+                    ↪ <span class="farm-mult">(50×)</span> LifeLeach, MelodicPrism, DeepSea, ArcaneConstellation
+                </div>
+            </div>
+            <div class="farm-row">
+                <div class="farm-resource">Fragments</div>
+                <div class="farm-auras">
+                    PrismShard <span class="farm-mult">(50×)</span>, EchoError <span class="farm-mult">(45×)</span><br>
+                    ↪ <span class="farm-mult">(40×)</span> MelodicPrism, DeepSea, ArcaneConstellation
+                </div>
+            </div>
+            <div class="farm-row">
+                <div class="farm-resource">Stars</div>
+                <div class="farm-auras">
+                    PrismShard <span class="farm-mult">(60×)</span><br>
+                    ↪ <span class="farm-mult">(40×)</span> MelodicPrism, DeepSea, ArcaneConstellation
+                </div>
+            </div>
+            <div class="farm-row">
+                <div class="farm-resource">Ingots</div>
+                <div class="farm-auras">
+                    PrismShard <span class="farm-mult">(40×)</span>, ArcaneConstellation <span class="farm-mult">(30×)</span>
+                </div>
+            </div>
+            <div class="farm-row">
+                <div class="farm-resource">Diamonds</div>
+                <div class="farm-auras">
+                    PrismShard <span class="farm-mult">(25×)</span>, ArcaneConstellation <span class="farm-mult">(20×)</span>
+                </div>
+            </div>
+            <div class="farm-row">
+                <div class="farm-resource">Boss Tokens</div>
+                <div class="farm-mult">(10×)</div>
+                <div class="farm-auras">PrismShard, FrozenEclipse, ChainedSorrow, LuminaSigil, GalaxyX, ArcaneConstellation</div>
+            </div>
+            <div class="farm-row">
+                <div class="farm-resource">Drop Chance</div>
+                <div class="farm-auras">
+                    ArcaneConstellation <span class="farm-mult">(6×)</span>, FrozenEclipse <span class="farm-mult">(4.5×)</span>, Vortex <span class="farm-mult">(4.5×)</span><br>
+                    ↪ <span class="farm-mult">(4×)</span> IceStorm, LuminaSigil, MelodicPrism, DeepSea, ChainedSorrow, MercuryVortex
+                </div>
+            </div>
+        </div>
+
+        <!-- Indirect Farming Assistance -->
+        <div class="info-section">
+            <div class="info-section-label">
+                <h2>Indirect / Minor Farming Assistance</h2>
+                <div class="info-section-line"></div>
+            </div>
+
+            <div class="farm-row">
+                <div class="farm-resource">Fish Sell Price</div>
+                <div class="farm-mult">(15×)</div>
+                <div class="farm-auras">DeepSea</div>
+            </div>
+            <div class="farm-row">
+                <div class="farm-resource">Fish Luck</div>
+                <div class="farm-mult">(2×)</div>
+                <div class="farm-auras">Watcher</div>
+            </div>
+            <div class="farm-row">
+                <div class="farm-resource">Boss Damage</div>
+                <div class="farm-mult">(10×)</div>
+                <div class="farm-auras">PrismShard</div>
+            </div>
+        </div>
+
+        <!-- Top Suggested Auras -->
+        <div class="info-section">
+            <div class="info-section-label">
+                <h2>Top Suggested Auras</h2>
+                <div class="info-section-line"></div>
+            </div>
+
+            <div class="suggested-card">
+                <div class="suggested-name">PrismShard</div>
+                <div class="suggested-stats">
+                    Essence <span>85×</span> &nbsp;·&nbsp; XP <span>60×</span> &nbsp;·&nbsp; Fragments <span>50×</span> &nbsp;·&nbsp; Stars <span>60×</span><br>
+                    Ingots <span>40×</span> &nbsp;·&nbsp; Diamonds <span>25×</span> &nbsp;·&nbsp; Boss Tokens <span>10×</span>
+                </div>
+            </div>
+
+            <div class="suggested-card">
+                <div class="suggested-name">ArcaneConstellation</div>
+                <div class="suggested-stats">
+                    Drop Chance <span>6×</span> &nbsp;·&nbsp; Boss Damage <span>7×</span>
+                </div>
+            </div>
+
+            <div class="suggested-card">
+                <div class="suggested-name">DeepSea</div>
+                <div class="suggested-stats">
+                    Fish Sell Price <span>15×</span>
+                </div>
+            </div>
+
+            <div class="suggested-card">
+                <div class="suggested-name">Watcher</div>
+                <div class="suggested-stats">
+                    Fish Luck <span>2×</span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <footer id="site-footer">
+        <div id="footer-inner">
+            <div id="footer-brand">
+                <img src="images/CCStudios.webp" alt="Creator CStudios" id="footer-logo-img">
+                <div id="footer-copy">Copyright &copy; 2026 Creator CStudios.<br>All rights reserved.</div>
+            </div>
+            <div class="footer-col">
+                <div class="footer-col-title">Site</div>
+                <a class="footer-link" href="index.html">Home</a>
+                <a class="footer-link" href="index.html#games-section">Games</a>
+                <a class="footer-link" href="about.html">Our Team</a>
+                <a class="footer-link" href="blogs.html">Dev Logs</a>
+                <a class="footer-link" href="moon-inc.html">Moon Inc. Info</a>
+                <a class="footer-link" href="weapon-x.html">Weapon X Info</a>
+                <a class="footer-link" href="contact.html">Contact</a>
+            </div>
+            <div class="footer-col">
+                <div class="footer-col-title">Connect</div>
+                <a class="footer-link" href="https://discord.gg/pfwVptewm9" target="_blank" rel="noopener">Discord</a>
+                <a class="footer-link" href="https://www.youtube.com/@CreatorCStudios" target="_blank" rel="noopener">YouTube</a>
+                <a class="footer-link" href="https://x.com/CreatorCStudio" target="_blank" rel="noopener">X (Twitter)</a>
+                <a class="footer-link" href="https://www.roblox.com/communities/3215945/Creators-CStudios#!/about" target="_blank" rel="noopener">Roblox</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="stars.js"></script>
+    <script src="nav.js"></script>
+    <script>
+        function switchAuraTab(btn, panel) {
+            document.querySelectorAll('.aura-tab-btn').forEach(function (b) { b.classList.remove('active'); });
+            document.querySelectorAll('.aura-tab-panel').forEach(function (p) { p.classList.remove('active'); });
+            btn.classList.add('active');
+            document.getElementById('aura-panel-' + panel).classList.add('active');
+        }
+
+        document.querySelectorAll('.aura-img').forEach(function (img) {
+            const wrap = document.createElement('div');
+            wrap.className = 'aura-img-wrap';
+            img.parentNode.insertBefore(wrap, img);
+            wrap.appendChild(img);
+            const label = document.createElement('span');
+            label.className = 'aura-img-label';
+            label.textContent = img.alt;
+            wrap.appendChild(label);
+        });
+    </script>
+</body>
+</html>

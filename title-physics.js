@@ -92,6 +92,7 @@
         title.style.height     = '100%';
         title.style.top        = '0';
         title.style.left       = '0';
+        title.style.transform  = 'none';
 
         spans.forEach(s => s.style.visibility = 'visible');
 
@@ -269,5 +270,5 @@
         }
     });
 
-    window.addEventListener('load', init);
+    document.addEventListener('DOMContentLoaded', init);
 })();

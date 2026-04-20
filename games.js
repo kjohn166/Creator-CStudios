@@ -63,7 +63,7 @@
             if (offset < -total / 2) offset += total;
 
             const absOffset = Math.abs(offset);
-            const cardWidth  = 360;
+            const cardWidth  = cards[0] ? cards[0].offsetWidth : 360;
             const gap        = 20;
             const xPos       = offset * (cardWidth + gap);
             const scale   = absOffset === 0 ? 1 : absOffset === 1 ? 0.78 : 0.6;

@@ -47,9 +47,21 @@ const RARITY_COLORS = {
     Mythic:    "#e879f9"
 };
 
-let unsubscribeLogs = null;
-let cachedLogs      = [];
-let searchQuery     = "";
+let unsubscribeTrade = null;
+let unsubscribeGift  = null;
+let cachedTradeLogs  = [];
+let cachedGiftLogs   = [];
+let tradeSearch      = "";
+let giftSearch       = "";
+let activeTab        = "trade";
+
+window.switchTab = function(tab) {
+    activeTab = tab;
+    document.getElementById("tab-trade").classList.toggle("active", tab === "trade");
+    document.getElementById("tab-gift").classList.toggle("active", tab === "gift");
+    document.getElementById("panel-trade").classList.toggle("active", tab === "trade");
+    document.getElementById("panel-gift").classList.toggle("active", tab === "gift");
+};
 
 function showDashboard() {
     loginBox.style.display       = "none";
@@ -57,6 +69,7 @@ function showDashboard() {
     wrapper.style.justifyContent = "flex-start";
     wrapper.style.alignItems     = "center";
     loadTradeLogs();
+    loadGiftLogs();
 }
 
 function showLogin() {
@@ -64,7 +77,8 @@ function showLogin() {
     dashboard.style.display      = "none";
     wrapper.style.justifyContent = "center";
     wrapper.style.alignItems     = "center";
-    if (unsubscribeLogs) { unsubscribeLogs(); unsubscribeLogs = null; }
+    if (unsubscribeTrade) { unsubscribeTrade(); unsubscribeTrade = null; }
+    if (unsubscribeGift)  { unsubscribeGift();  unsubscribeGift  = null; }
 }
 
 function loadTradeLogs() {
@@ -73,13 +87,29 @@ function loadTradeLogs() {
         orderBy("timestamp", "desc"),
         limit(200)
     );
-    unsubscribeLogs = onSnapshot(q, snapshot => {
-        cachedLogs = snapshot.docs.map(d => d.data());
-        renderTradeLogs(applySearch(cachedLogs, searchQuery));
+    unsubscribeTrade = onSnapshot(q, snapshot => {
+        cachedTradeLogs = snapshot.docs.map(d => d.data());
+        renderTradeLogs(applySearch(cachedTradeLogs, tradeSearch));
     }, err => {
-        console.error("Firestore read error:", err);
-        document.getElementById("trade-log-content").innerHTML =
-            '<p class="trade-log-empty">Failed to load logs. Check Firestore rules.</p>';
+        console.error("Firestore trade log error:", err);
+        document.getElementById("trade-log-list").innerHTML =
+            '<p class="trade-log-empty">Failed to load trade logs. Check Firestore rules.</p>';
+    });
+}
+
+function loadGiftLogs() {
+    const q = query(
+        collection(db, "giftLogs"),
+        orderBy("timestamp", "desc"),
+        limit(200)
+    );
+    unsubscribeGift = onSnapshot(q, snapshot => {
+        cachedGiftLogs = snapshot.docs.map(d => d.data());
+        renderGiftLogs(applySearch(cachedGiftLogs, giftSearch));
+    }, err => {
+        console.error("Firestore gift log error:", err);
+        document.getElementById("gift-log-list").innerHTML =
+            '<p class="trade-log-empty">Failed to load gift logs. Check Firestore rules.</p>';
     });
 }
 
@@ -100,10 +130,14 @@ function applySearch(logs, rawQuery) {
     const q = (rawQuery || "").trim();
     if (!q) return logs;
     return logs.filter(log =>
-        fuzzyMatch(q, log.playerAName) ||
-        fuzzyMatch(q, log.playerBName) ||
-        fuzzyMatch(q, log.playerAUserId) ||
-        fuzzyMatch(q, log.playerBUserId)
+        fuzzyMatch(q, log.playerAName)    ||
+        fuzzyMatch(q, log.playerBName)    ||
+        fuzzyMatch(q, log.playerAUserId)  ||
+        fuzzyMatch(q, log.playerBUserId)  ||
+        fuzzyMatch(q, log.senderName)     ||
+        fuzzyMatch(q, log.senderUserId)   ||
+        fuzzyMatch(q, log.recipientName)  ||
+        fuzzyMatch(q, log.recipientUserId)
     );
 }
 
@@ -111,7 +145,7 @@ function renderTradeLogs(logs) {
     const list = document.getElementById("trade-log-list");
 
     if (logs.length === 0) {
-        const msg = searchQuery.trim()
+        const msg = tradeSearch.trim()
             ? "No matches for this search."
             : "No trade logs yet.";
         list.innerHTML = `<p class="trade-log-empty">${msg}</p>`;
@@ -157,6 +191,51 @@ function renderTradeLogs(logs) {
                     </div>
                 </div>
                 <div class="tl-footer">Weapon X Simulator — Trade Log &bull; ${dateStr}</div>
+            </div>
+        </div>`;
+    }).join("");
+}
+
+function renderGiftLogs(logs) {
+    const list = document.getElementById("gift-log-list");
+
+    if (logs.length === 0) {
+        const msg = giftSearch.trim()
+            ? "No matches for this search."
+            : "No gift logs yet.";
+        list.innerHTML = `<p class="trade-log-empty">${msg}</p>`;
+        return;
+    }
+
+    list.innerHTML = logs.map(log => {
+        const dateStr   = log.timestamp ? formatTimestamp(log.timestamp) : "Unknown time";
+        const sender    = esc(log.senderName    || "Unknown");
+        const recipient = esc(log.recipientName || "Unknown");
+        const senderId  = esc(log.senderUserId    || "");
+        const recipId   = esc(log.recipientUserId || "");
+        const items     = esc(log.itemsFormatted  || log.items || "Nothing");
+
+        return `
+        <div class="tl-card">
+            <div class="tl-card-accent" style="background:#a78bfa"></div>
+            <div class="tl-card-body">
+                <div class="tl-card-title">Gift Sent</div>
+                <div class="tl-players">
+                    <div class="tl-player-name">
+                        <span class="tl-dot" style="background:#a78bfa"></span>${sender} (${senderId})
+                    </div>
+                    <div class="tl-player-name">
+                        <span class="tl-dot" style="background:#f9a8d4"></span>${recipient} (${recipId})
+                    </div>
+                </div>
+                <div class="tl-divider"></div>
+                <div class="tl-offers">
+                    <div>
+                        <div class="tl-offer-label">Items Gifted</div>
+                        <div class="tl-offer-items">${items}</div>
+                    </div>
+                </div>
+                <div class="tl-footer">Weapon X Simulator — Gift Log &bull; ${dateStr}</div>
             </div>
         </div>`;
     }).join("");
@@ -216,10 +295,16 @@ passInput.addEventListener("keydown", e => {
 
 logoutBtn.addEventListener("click", () => signOut(auth));
 
-const searchInput = document.getElementById("trade-log-search");
-searchInput.addEventListener("input", e => {
-    searchQuery = e.target.value;
-    renderTradeLogs(applySearch(cachedLogs, searchQuery));
+const tradeSearchInput = document.getElementById("trade-log-search");
+tradeSearchInput.addEventListener("input", e => {
+    tradeSearch = e.target.value;
+    renderTradeLogs(applySearch(cachedTradeLogs, tradeSearch));
+});
+
+const giftSearchInput = document.getElementById("gift-log-search");
+giftSearchInput.addEventListener("input", e => {
+    giftSearch = e.target.value;
+    renderGiftLogs(applySearch(cachedGiftLogs, giftSearch));
 });
 
 function friendlyError(code) {

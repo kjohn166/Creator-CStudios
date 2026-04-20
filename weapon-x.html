@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/webp" href="images/CCStudios.webp">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Weapon X Info - Creator CStudios</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        #game-info-page {
+            padding: 120px 60px 60px 60px;
+            max-width: 960px;
+            margin: 0 auto;
+        }
+
+        .game-info-header {
+            text-align: center;
+            margin-bottom: 56px;
+        }
+
+        .game-info-header h1 {
+            font-size: 2.8rem;
+            margin-bottom: 8px;
+            background: linear-gradient(90deg, #ffffff, #a5f3fc, #60a5fa, #ffffff);
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: shimmer 6s ease infinite;
+            filter: drop-shadow(0 0 12px rgba(96, 165, 250, 0.4));
+        }
+
+        .game-info-header .subtitle {
+            opacity: 0.55;
+            font-size: 16px;
+            margin-bottom: 32px;
+        }
+
+        .play-btn {
+            display: inline-block;
+            padding: 14px 36px;
+            background: linear-gradient(135deg, rgba(96, 165, 250, 0.2), rgba(96, 165, 250, 0.08));
+            border: 1px solid rgba(96, 165, 250, 0.4);
+            border-radius: 50px;
+            color: #60a5fa;
+            font-size: 15px;
+            font-weight: 700;
+            text-decoration: none;
+            letter-spacing: 0.5px;
+            transition: background 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+        }
+
+        .play-btn:hover {
+            background: linear-gradient(135deg, rgba(96, 165, 250, 0.3), rgba(96, 165, 250, 0.12));
+            box-shadow: 0 0 24px rgba(96, 165, 250, 0.25);
+            transform: translateY(-2px);
+        }
+
+        .game-thumbnail {
+            width: 100%;
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.5);
+            margin-bottom: 48px;
+        }
+
+        .game-thumbnail img {
+            width: 100%;
+            display: block;
+            object-fit: cover;
+            max-height: 420px;
+        }
+
+        .info-section {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 36px;
+            backdrop-filter: blur(8px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            margin-bottom: 24px;
+        }
+
+        .info-section-label {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 20px;
+        }
+
+        .info-section-label h2 {
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #60a5fa;
+            margin: 0;
+            white-space: nowrap;
+        }
+
+        .info-section-line {
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(to right, rgba(96, 165, 250, 0.35), transparent);
+        }
+
+        .info-section p {
+            opacity: 0.75;
+            line-height: 1.75;
+            font-size: 15px;
+            margin: 0;
+        }
+
+        .info-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 4px;
+        }
+
+        .info-tag {
+            background: rgba(96, 165, 250, 0.1);
+            border: 1px solid rgba(96, 165, 250, 0.25);
+            border-radius: 50px;
+            padding: 6px 16px;
+            font-size: 13px;
+            color: #60a5fa;
+            font-weight: 600;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+        }
+
+        .info-stat {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 14px;
+            padding: 20px 24px;
+        }
+
+        .info-stat-label {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            opacity: 0.4;
+            margin-bottom: 6px;
+        }
+
+        .info-stat-value {
+            font-size: 16px;
+            font-weight: 700;
+            color: #ffffff;
+        }
+
+        @media (max-width: 640px) {
+            #game-info-page { padding: 100px 20px 40px; }
+            .info-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="stars" id="stars"></div>
+    <nav>
+        <button class="nav-hamburger" id="nav-hamburger" aria-label="Menu" aria-expanded="false">
+            <span></span><span></span><span></span>
+        </button>
+        <div class="nav-menu" id="nav-menu">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="index.html#games-section">Games</a></li>
+                <li><a href="about.html">Our Team</a></li>
+                <li><a href="blogs.html">Dev Logs</a></li>
+                <li><a href="moon-inc.html">Moon Inc. Info</a></li>
+                <li><a href="weapon-x.html">Weapon X Info</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div id="game-info-page">
+        <div class="game-info-header">
+            <h1>Weapon X Simulator Game Info</h1>
+            <p class="subtitle">We got nothing for you just yet, try again later!</p>
+        </div>
+
+    </div>
+
+    <footer id="site-footer">
+        <div id="footer-inner">
+            <div id="footer-brand">
+                <img src="images/CCStudios.webp" alt="Creator CStudios" id="footer-logo-img">
+                <div id="footer-copy">Copyright &copy; 2026 Creator CStudios.<br>All rights reserved.</div>
+            </div>
+            <div class="footer-col">
+                <div class="footer-col-title">Site</div>
+                <a class="footer-link" href="index.html">Home</a>
+                <a class="footer-link" href="index.html#games-section">Games</a>
+                <a class="footer-link" href="about.html">Our Team</a>
+                <a class="footer-link" href="blogs.html">Dev Logs</a>
+                <a class="footer-link" href="moon-inc.html">Moon Inc. Info</a>
+                <a class="footer-link" href="weapon-x.html">Weapon X Info</a>
+                <a class="footer-link" href="contact.html">Contact</a>
+            </div>
+            <div class="footer-col">
+                <div class="footer-col-title">Connect</div>
+                <a class="footer-link" href="https://discord.gg/pfwVptewm9" target="_blank" rel="noopener">Discord</a>
+                <a class="footer-link" href="https://www.youtube.com/@CreatorCStudios" target="_blank" rel="noopener">YouTube</a>
+                <a class="footer-link" href="https://x.com/CreatorCStudio" target="_blank" rel="noopener">X (Twitter)</a>
+                <a class="footer-link" href="https://www.roblox.com/communities/3215945/Creators-CStudios#!/about" target="_blank" rel="noopener">Roblox</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="stars.js"></script>
+    <script src="nav.js"></script>
+</body>
+</html>

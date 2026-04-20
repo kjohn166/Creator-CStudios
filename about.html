@@ -59,6 +59,7 @@
 
     .team-section-label.dev h2    { color: #4ade80; opacity: 1; }
     .team-section-label.mod h2    { color: #818cf8; opacity: 1; }
+    .team-section-label.contrib h2 { color: #fb923c; opacity: 1; }
 
     .team-section-line {
         flex: 1;
@@ -71,6 +72,10 @@
 
     .team-section-label.mod .team-section-line {
         background: linear-gradient(to right, rgba(129, 140, 248, 0.4), transparent);
+    }
+
+    .team-section-label.contrib .team-section-line {
+        background: linear-gradient(to right, rgba(251, 146, 60, 0.4), transparent);
     }
 
     /* Mod cards get a purple accent instead of green */
@@ -86,6 +91,21 @@
 
     .member-card.mod-card .member-role {
         color: #818cf8;
+    }
+
+    /* Contributor cards get an orange accent */
+    .member-card.contrib-card:hover {
+        border-color: rgba(251, 146, 60, 0.4);
+        box-shadow: 0 0 24px rgba(251, 146, 60, 0.15), 0 4px 20px rgba(0, 0, 0, 0.4);
+    }
+
+    .member-card.contrib-card .member-avatar {
+        border-color: rgba(251, 146, 60, 0.3);
+        box-shadow: 0 0 12px rgba(251, 146, 60, 0.2);
+    }
+
+    .member-card.contrib-card .member-role {
+        color: #fb923c;
     }
 
     .team-grid {
@@ -167,6 +187,21 @@
         line-height: 1.5;
         margin-top: 4px;
     }
+
+    @media (max-width: 640px) {
+        #about-page { padding: 100px 20px 40px; }
+        .team-grid { grid-template-columns: 1fr; }
+    }
+
+    body {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+    }
+
+    #about-page {
+        flex: 1;
+    }
   </style>
 </head>
 <body>
@@ -181,6 +216,8 @@
                 <li><a href="index.html#games-section">Games</a></li>
                 <li><a href="about.html">Our Team</a></li>
                 <li><a href="blogs.html">Dev Logs</a></li>
+                <li><a href="moon-inc.html">Moon Inc. Info</a></li>
+                <li><a href="weapon-x.html">Weapon X Info</a></li>
                 <li><a href="contact.html">Contact</a></li>
             </ul>
         </div>
@@ -207,7 +244,8 @@
                         </div>
                         <div class="member-info">
                             <span class="member-role">Owner &amp; Lead Developer</span>
-                            <h2 class="member-name">ZBZoid</h2>
+                            <h2 class="member-name">Chad</h2>
+                            <p class="member-roblox">@chaddy774</p>
                             <p class="member-bio">Founding member of Creator CStudios, solo developer of Moon Incremental, and lead developer of Weapon X Simulator.</p>
                         </div>
                     </a>
@@ -219,7 +257,8 @@
                         </div>
                         <div class="member-info">
                             <span class="member-role">Co-Owner &amp; Lead Developer</span>
-                            <h2 class="member-name">MintJumble</h2>
+                            <h2 class="member-name">Kevin</h2>
+                            <p class="member-roblox">@MintJumble</p>
                             <p class="member-bio">Co-Owner of Creator CStudios and lead developer of Weapon X Simulator.</p>
                         </div>
                     </a>
@@ -245,6 +284,7 @@
                         <div class="member-info">
                             <span class="member-role">Senior Moderator</span>
                             <h2 class="member-name">nexusmarie</h2>
+                            <p class="member-roblox">@purpleaciddd</p>
                             <p class="member-bio">Senior moderator of the Creator CStudios Discord community.</p>
                         </div>
                     </a>
@@ -257,11 +297,64 @@
                         <div class="member-info">
                             <span class="member-role">Senior Moderator</span>
                             <h2 class="member-name">ksy2c</h2>
+                            <p class="member-roblox">@KSY2C</p>
                             <p class="member-bio">Senior Moderator of the Creator CStudios Discord community.</p>
                         </div>
                     </a>
 
                     <!-- Add more mod cards here -->
+
+                </div>
+            </div>
+
+            <!-- ── Contributors ── -->
+            <div class="team-section">
+                <div class="team-section-label contrib">
+                    <h2>Contributors</h2>
+                    <div class="team-section-line"></div>
+                </div>
+                <div class="team-grid">
+
+                    <!-- Member card: Ray -->
+                    <a class="member-card contrib-card" href="https://www.roblox.com/users/2385870185/profile" target="_blank" rel="noopener">
+                        <div class="member-avatar">
+                            <img data-roblox-id="2385870185" alt="Ray avatar" src="">
+                        </div>
+                        <div class="member-info">
+                            <span class="member-role">Contributor</span>
+                            <h2 class="member-name">Ray</h2>
+                            <p class="member-roblox">@1Rayvyn</p>
+                            <p class="member-bio">Play tester for Weapon X Simulator and writer of Moon Incremental info charts.</p>
+                        </div>
+                    </a>
+
+                    <!-- Member card: arianamybby -->
+                    <a class="member-card contrib-card" href="https://www.roblox.com/users/609340290/profile" target="_blank" rel="noopener">
+                        <div class="member-avatar">
+                            <img data-roblox-id="609340290" alt="arianamybby avatar" src="">
+                        </div>
+                        <div class="member-info">
+                            <span class="member-role">Contributor</span>
+                            <h2 class="member-name">arianamybby</h2>
+                            <p class="member-roblox">@acSolaire</p>
+                            <p class="member-bio">Play tester for Weapon X Simulator.</p>
+                        </div>
+                    </a>
+
+                    <!-- Member card: mofubacon -->
+                    <a class="member-card contrib-card" href="https://www.roblox.com/users/10578902945/profile" target="_blank" rel="noopener">
+                        <div class="member-avatar">
+                            <img data-roblox-id="10578902945" alt="mofubacon avatar" src="">
+                        </div>
+                        <div class="member-info">
+                            <span class="member-role">Contributor</span>
+                            <h2 class="member-name">mofubacon</h2>
+                            <p class="member-roblox">@mofubacon</p>
+                            <p class="member-bio">Play tester for Weapon X Simulator.</p>
+                        </div>
+                    </a>
+
+                    <!-- Add more contributor cards here -->
 
                 </div>
             </div>
@@ -309,6 +402,8 @@
                 <a class="footer-link" href="index.html#games-section">Games</a>
                 <a class="footer-link" href="about.html">Our Team</a>
                 <a class="footer-link" href="blogs.html">Dev Logs</a>
+                <a class="footer-link" href="moon-inc.html">Moon Inc. Info</a>
+                <a class="footer-link" href="weapon-x.html">Weapon X Info</a>
                 <a class="footer-link" href="contact.html">Contact</a>
             </div>
             <div class="footer-col">

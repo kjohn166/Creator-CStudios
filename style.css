@@ -10,6 +10,8 @@ body {
     text-align: center;
     margin: 0;
     padding: 0;
+    display: flex;
+    flex-direction: column;
 }
 
 nav {
@@ -75,7 +77,7 @@ nav {
 }
 
 .nav-menu.open {
-    max-height: 400px;
+    max-height: 560px;
     opacity: 1;
     pointer-events: auto;
 }
@@ -99,6 +101,8 @@ nav {
 .nav-menu.open li:nth-child(3) { opacity:1; transform:none; transition-delay:0.15s; }
 .nav-menu.open li:nth-child(4) { opacity:1; transform:none; transition-delay:0.20s; }
 .nav-menu.open li:nth-child(5) { opacity:1; transform:none; transition-delay:0.25s; }
+.nav-menu.open li:nth-child(6) { opacity:1; transform:none; transition-delay:0.30s; }
+.nav-menu.open li:nth-child(7) { opacity:1; transform:none; transition-delay:0.35s; }
 
 .nav-menu a {
     display: block;
@@ -214,6 +218,8 @@ button:active {
     position: absolute;
     top: 50%;
     left: 50%;
+    transform: translate(-50%, -50%);
+    visibility: hidden;
     white-space: nowrap;
     font-size: 4rem;
     /* CSS float animation disabled — JS physics handles movement */
@@ -1670,6 +1676,7 @@ button:active {
     background: rgba(0,0,0,0.35);
     backdrop-filter: blur(8px);
     padding: 48px 40px 36px;
+    margin-top: auto;
 }
 
 #footer-inner {
@@ -1727,4 +1734,44 @@ button:active {
 }
 
 .footer-link:hover { color: #4ade80; }
+
+/* ─── Mobile: footer ──────────────────────────────── */
+@media (max-width: 700px) {
+    #site-footer { padding: 40px 24px 32px; }
+    #footer-inner {
+        flex-direction: column;
+        align-items: center;
+        gap: 28px;
+        text-align: center;
+    }
+    #footer-brand {
+        align-items: center;
+        text-align: center;
+    }
+}
+
+/* ─── Mobile: additional 600px fixes ─────────────── */
+@media (max-width: 600px) {
+    /* Index title — smaller font so physics arena fits */
+    #index-title { font-size: 2.4rem; }
+    #title-arena { height: 160px; }
+
+    /* Who We Are team — stack vertically */
+    .who-we-are-team { flex-direction: column; }
+
+    /* Dev log — stack image above text */
+    .devlog-inner { flex-direction: column; align-items: center; }
+    .devlog-img-wrap { width: 100%; height: 160px; }
+    #devlog-box { padding: 24px 20px; }
+
+    /* Games page subtitle */
+    .games-subtitle { padding: 0 20px; font-size: 16px; }
+    #games-page .studio-title { margin-top: 60px; font-size: 2.2rem; }
+
+    /* Carousel card responsive width */
+    .game-card { width: min(300px, calc(100vw - 96px)); }
+    .game-thumb-wrap { height: 170px; }
+    #games-scroller { height: 260px; }
+    #games-scroller-wrap { padding: 40px 0; }
+}
 

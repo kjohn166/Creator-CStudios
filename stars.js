@@ -4,7 +4,7 @@
 
     // ── bgCanvas: tall, static, drawn once — browser composites on scroll ──
     const bgCanvas = document.createElement('canvas');
-    bgCanvas.style.cssText = 'position:absolute;top:0;left:0;width:100%;pointer-events:none;';
+    bgCanvas.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;';
     scene.appendChild(bgCanvas);
     const bgCtx = bgCanvas.getContext('2d');
 
@@ -101,7 +101,7 @@
 
     function renderBg() {
         const w = window.innerWidth;
-        const h = getPageHeight();
+        const h = window.innerHeight;
         bgCanvas.width  = w;
         bgCanvas.height = h;
 
@@ -217,10 +217,5 @@
         }, 200);
     });
 
-    if (window.ResizeObserver) {
-        new ResizeObserver(function () {
-            const newH = getPageHeight();
-            if (Math.abs(newH - bgCanvas.height) > 100) renderBg();
-        }).observe(document.body);
-    }
+    /* bgCanvas is now fixed-viewport — no body resize observer needed */
 })();

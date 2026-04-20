@@ -125,6 +125,40 @@
                 box-shadow: 0 0 12px rgba(248, 113, 113, 0.2);
             }
 
+            /* Tabs */
+            .admin-tabs {
+                display: flex;
+                gap: 8px;
+                margin-bottom: 24px;
+                background: rgba(255,255,255,0.04);
+                border: 1px solid rgba(255,255,255,0.08);
+                border-radius: 12px;
+                padding: 4px;
+            }
+
+            .admin-tab {
+                flex: 1;
+                padding: 10px 16px;
+                border-radius: 9px;
+                border: none;
+                background: transparent;
+                color: rgba(255,255,255,0.45);
+                font-size: 14px;
+                font-weight: 600;
+                font-family: Arial, sans-serif;
+                cursor: pointer;
+                transition: background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+            }
+
+            .admin-tab.active {
+                background: rgba(74,222,128,0.15);
+                color: #4ade80;
+                box-shadow: 0 0 12px rgba(74,222,128,0.15);
+            }
+
+            .tab-panel { display: none; }
+            .tab-panel.active { display: block; }
+
             .trade-log-table-wrap {
                 background: rgba(255, 255, 255, 0.08);
                 border: 1px solid rgba(255, 255, 255, 0.1);
@@ -313,16 +347,38 @@
             <!-- Dashboard (shown after login) -->
             <div id="dashboard">
                 <div id="dashboard-header">
-                    <h1>Trade Logs</h1>
+                    <h1>Admin Dashboard</h1>
                     <button id="logout-btn">Sign Out</button>
                 </div>
-                <div class="trade-log-table-wrap">
-                    <h2>Log Entries</h2>
-                    <div id="trade-log-search-wrap">
-                        <input type="text" id="trade-log-search" placeholder="Search by player name or user ID..." autocomplete="off" />
+
+                <div class="admin-tabs">
+                    <button class="admin-tab active" id="tab-trade" onclick="switchTab('trade')">Trade Logs</button>
+                    <button class="admin-tab" id="tab-gift" onclick="switchTab('gift')">Gifting Logs</button>
+                </div>
+
+                <!-- Trade Logs Panel -->
+                <div class="tab-panel active" id="panel-trade">
+                    <div class="trade-log-table-wrap">
+                        <h2>Trade Log Entries</h2>
+                        <div id="trade-log-search-wrap">
+                            <input type="text" id="trade-log-search" placeholder="Search by player name or user ID..." autocomplete="off" />
+                        </div>
+                        <div id="trade-log-content">
+                            <div id="trade-log-list"></div>
+                        </div>
                     </div>
-                    <div id="trade-log-content">
-                        <div id="trade-log-list"></div>
+                </div>
+
+                <!-- Gift Logs Panel -->
+                <div class="tab-panel" id="panel-gift">
+                    <div class="trade-log-table-wrap">
+                        <h2>Gift Log Entries</h2>
+                        <div id="trade-log-search-wrap">
+                            <input type="text" id="gift-log-search" placeholder="Search by player name or user ID..." autocomplete="off" />
+                        </div>
+                        <div id="trade-log-content">
+                            <div id="gift-log-list"></div>
+                        </div>
                     </div>
                 </div>
             </div>
