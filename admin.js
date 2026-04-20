@@ -233,18 +233,20 @@ function renderGiftLogs(logs) {
                 <div class="tl-card-title">Purchase / Gift &nbsp;${statusLabel}</div>
                 <div class="tl-players">
                     <div class="tl-player-name">
-                        <span class="tl-dot" style="background:#a78bfa"></span>Buyer: ${buyer}
+                        <span class="tl-dot" style="background:#a78bfa"></span>${buyer} (${buyerId})
                     </div>
-                    <div class="tl-player-id">ID: ${buyerId}</div>
-                    <div class="tl-player-name" style="margin-top:6px;">
-                        <span class="tl-dot" style="background:#f9a8d4"></span>Giftee: ${giftee}
+                    <div class="tl-player-name">
+                        <span class="tl-dot" style="background:#f9a8d4"></span>${giftee} (${gifteeId})
                     </div>
-                    <div class="tl-player-id">ID: ${gifteeId}</div>
                 </div>
                 <div class="tl-divider"></div>
                 <div class="tl-offers">
                     <div>
-                        <div class="tl-offer-label">Perk</div>
+                        <div class="tl-offer-label">Buyer</div>
+                        <div class="tl-offer-items">${buyer}</div>
+                    </div>
+                    <div>
+                        <div class="tl-offer-label">Perk Gifted</div>
                         <div class="tl-offer-items">${perkId}</div>
                     </div>
                 </div>
